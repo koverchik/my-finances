@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/outlay', function () {
+    return view('auth.table.outlay');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

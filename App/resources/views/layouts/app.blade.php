@@ -76,5 +76,22 @@
             @yield('content')
         </main>
     </div>
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="offset-1 col-3 align-self-end">
+          <a>Нашли проблему?</a>
+          <p>koverchik.o@gmail.com</p>
+        </div>
+        <div class="col-3 offset-5">
+          <ul>
+            <li>Как пользоваться?</li>
+            <li>Сколько стоит?</li>
+            <li>Информация сохраняется?</li>
+            <li>Кто может узнать о моих расходах?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
