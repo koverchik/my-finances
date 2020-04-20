@@ -22,8 +22,14 @@
         <tbody>
           <tr>
             <td></td>
-            <td><input id="name_cost" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Наименование"></td>
-            <td><input  id="size_cost"type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="2.34"></td>
+            <td>
+              <input id="name_cost" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Молоко">
+              <small id="name_cost" class="form-text text-muted">Напишите название</small>
+            </td>
+            <td>
+              <input id="size_cost"type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="2.34">
+              <small id="size_cost" class="form-text text-muted">Введите значение</small>
+            </td>
           </tr>
         </tbody>
     </table>
