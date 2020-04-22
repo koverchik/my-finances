@@ -36,5 +36,14 @@
     <div class="d-flex justify-content-end">
       <button id="button_Add" class="btn btn-info rounded-0">+ Добавить</button>
     </div>
+    @if (!Auth::check())
+        <div class="row justify-content-md-center">
+            Чтобы сохранить смету<p><a href="/register" class="badge badge-light">зарегистрируйтесь</a></p> или <p><a href="/login" class="badge badge-light">войдите</a></p> в систему.
+        </div>
+        @else
+        <div class="row justify-content-md-center">
+          <button type="button" class="btn btn-success rounded-0">Сохранить смету</button>
+        </div>
+    @endif
   </div>
 @endsection
