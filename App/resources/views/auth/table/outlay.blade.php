@@ -41,9 +41,17 @@
             Чтобы сохранить смету<p><a href="/register" class="badge badge-light">зарегистрируйтесь</a></p> или <p><a href="/login" class="badge badge-light">войдите</a></p> в систему.
         </div>
         @else
-        <div class="row justify-content-md-center">
-          <button type="button" class="btn btn-success rounded-0">Сохранить смету</button>
-        </div>
-    @endif
+        <form action="{{route('outlaySave')}}" method="post" class="container-fluid" id="outlay">
+          @csrf
+          <div class="col-3">
+            <input class="form-control" name="name" type="text" placeholder="Название сметы" form="outlay">
+          </div>
+          <div class="row justify-content-md-center" class="col-2">
+            <button type="submit" class="btn btn-success rounded-0">Сохранить смету</button>
+          </div>
+        </form>
+      @endif
   </div>
+
+
 @endsection

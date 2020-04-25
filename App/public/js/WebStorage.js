@@ -31,12 +31,31 @@ let valueArray = new Array();
       tr.append(tdNamberRow);
 
       let tdValueName = document.createElement('td');
-      tdValueName.innerHTML = value.valueName;
+      let tdValueNameInput = document.createElement('input');
+      //value.valueName;
+      nameAttribute = "name" + namberRow;
+      tdValueNameInput.setAttribute("name", nameAttribute);
+      tdValueNameInput.setAttribute("readonly", "true");
+      tdValueNameInput.setAttribute("form", "outlay");
+      tdValueNameInput.setAttribute("value", value.valueName);
+      tdValueNameInput.style.background = "none";
+      tdValueNameInput.style.border = "none";
+      tdValueName.append(tdValueNameInput);
       tr.append(tdValueName);
 
       let tdValueSizeSize = document.createElement('td');
-      tdValueSizeSize.innerHTML = value.valueSize;
+      let tdValueSizeInput = document.createElement('input');
+
+      nameAttributeSize = "size" + namberRow;
+      tdValueSizeInput.setAttribute("name", nameAttributeSize);
+      tdValueSizeInput.setAttribute("readonly", "true");
+      tdValueSizeInput.setAttribute("form", "outlay");
+      tdValueSizeInput.setAttribute("value", value.valueSize);
+      tdValueSizeInput.style.background = "none";
+      tdValueSizeInput.style.border = "none";
+      tdValueSizeSize.append(tdValueSizeInput);
       tr.append(tdValueSizeSize);
+
       $("#table").append(tbody);
 
       $("#name_cost").val('');
@@ -69,7 +88,7 @@ let valueArray = new Array();
         sessionStorage.setItem(keyCost, JSON.stringify(costObj));
         createOutlayPar(keyCost);
         sumAllValues();
-  
+
       }else{
         $("#size_cost").addClass("is-invalid");
         $("#size_cost").val('');
