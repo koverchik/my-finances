@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\NameOutlayRequest;
+
 
 class OutlaySaveController extends Controller
 {
-  public function saveOutlay(Request $req)
+  public function saveOutlay(NameOutlayRequest $req)
   {
-    $validation = $req->validate([
-      'title' => 'required|max:100'
-    ]);
-    dd($req);
+      dd($req);
   }
 }
