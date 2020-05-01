@@ -35,7 +35,8 @@ class OutlaySaveController extends Controller
           }
       }
 
-      return redirect()-> route('home')->with('success', 'Смета была сохранена');
+      $title = 'Смета с названием «'. $req->input('title').'» сохранена';
+      return redirect()-> route('home')->with('success', $title);
 
     }
 }
