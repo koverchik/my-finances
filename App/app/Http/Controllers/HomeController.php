@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\NameOutlay;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $req)
     {
-        return view('home');
+        $id_user = $req->user();
+        $id = $id_user['id'];
+        return view('home',  ['data' => NameOutlay::all(), $id => $id]);
     }
+
 }

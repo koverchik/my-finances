@@ -52,7 +52,7 @@
         </div>
 
         @endif
-        <form action="{{route('outlaySave')}}" method="post" class="container-fluid" id="outlay">
+          <form action="{{route('outlaySave')}}" method="post" class="container-fluid" id="outlay">
           @csrf
           <div class="col-3">
             <input class="form-control" name="title" type="text" placeholder="Название сметы" form="outlay">

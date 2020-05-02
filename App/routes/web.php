@@ -26,3 +26,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('home/outlay-save/all', 'OutlaySaveController@saveOutlay')->name('outlaySave');
+
+Route::get('/outlay/all/{id}', 'OutlaySaveController@allOutlay')->name('outlays');

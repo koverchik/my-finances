@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Requests\NameOutlayRequest;
 use App\NameOutlay;
@@ -15,7 +14,7 @@ class OutlaySaveController extends Controller
   {
       $nameOutlay =  new NameOutlay();
       $id_user = $req->user();
-      $id = $id_user['id'] ;
+      $id = $id_user['id'];
       $nameOutlay -> name = $req->input('title');
       $nameOutlay -> user_id = $id;
       $nameOutlay -> save();
@@ -37,6 +36,14 @@ class OutlaySaveController extends Controller
 
       $title = 'Смета с названием «'. $req->input('title').'» сохранена';
       return redirect()-> route('home')->with('success', $title);
-
     }
+
+    public function allOutlay(Request $request)
+    {
+      $namesOutlay =  new NameOutlay();
+      $userId = auth()->user()->id;
+      return view('auth.table.saveOutlay', ['data' => $namesOutlay -> where('user_id', $userId)->get()]);
+    }
+
+
 }
