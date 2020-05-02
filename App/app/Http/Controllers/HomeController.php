@@ -26,7 +26,8 @@ class HomeController extends Controller
     {
         $id_user = $req->user();
         $id = $id_user['id'];
-        return view('home',  ['data' => NameOutlay::all(), $id => $id]);
+        $namesOutlay = NameOutlay::where('user_id', $id)->get();
+        return view('home',  ['data' => $namesOutlay, $id => $id]);
     }
 
 }
