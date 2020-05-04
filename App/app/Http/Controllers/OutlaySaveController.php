@@ -45,5 +45,14 @@ class OutlaySaveController extends Controller
       return view('auth.table.saveOutlay', ['data' => $namesOutlay -> where('user_id', $userId)->get()]);
     }
 
+    public function outlayOne($id)
+    {
+    $nameOne =  new NameOutlay();
+    $rowOutlay =  new RowOutlay();
+    $collection = $rowOutlay-> where('name_outlay_id', $id)->get();
+    $sum = $collection->pluck('amount')->sum();
+    return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum]);
+    }
+
 
 }

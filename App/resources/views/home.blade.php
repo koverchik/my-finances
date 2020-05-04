@@ -26,7 +26,7 @@
                       <a href="/outlay/all/{{ Auth::user()->id }}" class="row justify-content-center h3">Семеты</a>
                       <ul>
                       @foreach ($data as $el)
-                        <li><a href="#">{{$el->name}}</a></li>
+                        <li><a href="{{route('outlayOne', $el->id)}}">{{$el->name}}</a></li>
                       @endforeach
                     </ul>
                       <div class="row justify-content-center">

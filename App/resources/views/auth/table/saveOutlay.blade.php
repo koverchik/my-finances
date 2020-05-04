@@ -3,16 +3,30 @@
 @section('content')
 <div class="container card">
   <h3>Сметы</h3>
-  @foreach($data as $oneNote)
-    <div>
-      <h4>{{$oneNote-> name}}</h4>
-      <p>
-        Создана:  {{date('d.m.Y в g:i', strtotime($oneNote-> created_at))}}
-      </p>
-      <p>
-        Изменена: {{date('d.m.Y в g:i', strtotime($oneNote-> updated_at))}}
-      </p>
-    </div>
-  @endforeach
+  <table id="table" class="table table-sm caption">
+    <thead class="thead-dark">
+      <tr>
+        <th>Нзвание</th>
+        <th>Создана</th>
+        <th>Измененна</th>
+      </tr>
+    </thead>
+    <thead class="thead-light">
+      @foreach($data as $oneNote)
+      <tr>
+        <th><a href="#">{{$oneNote-> name}}</a></th>
+        <th>
+          {{date('d.m.Y в g:i', strtotime($oneNote-> created_at))}}
+        </th>
+        <th>
+          {{date('d.m.Y в g:i', strtotime($oneNote-> updated_at))}}
+        </th>
+      </tr>
+      @endforeach
+    </thead>
+</table>
+  <div class="d-flex justify-content-center">
+    <button id="button_Add" class="btn btn-warning rounded-0"><a href="/outlay" class="text-danger">+ Добавить</a></button>
+  </div>
 </div>
 @endsection

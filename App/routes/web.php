@@ -28,3 +28,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('home/outlay-save/all', 'OutlaySaveController@saveOutlay')->name('outlaySave');
 
 Route::get('/outlay/all/{id}', 'OutlaySaveController@allOutlay')->name('outlays');
+
+Route::get('home/outlay/{id}', 'OutlaySaveController@outlayOne')->name('outlayOne');
