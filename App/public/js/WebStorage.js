@@ -57,7 +57,6 @@ let valueArray = new Array();
       tr.append(tdValueSizeSize);
 
       $("#table").append(tbody);
-
       $("#name_cost").val('');
       $("#size_cost").val('');
     }
@@ -70,6 +69,9 @@ let valueArray = new Array();
         $("#name_cost").addClass("is-invalid");
         $("#name_cost" ).focus(function(){$("#name_cost").removeClass("is-invalid");});
         } else if (valueSizeCost.search(regex) == 0){
+          if (valueSizeCost.search(/^[0-9],[0-9]/) == 0){
+            valueSizeCost = valueSizeCost.match(/^[0-9],[0-9]/).toString().replace(",", ".");
+          }
           let keyCost = "keyCost" + Date.now();
           let costObj = {
             "valueName": valueNameCost,
@@ -141,7 +143,7 @@ let valueArray = new Array();
           tdValueSizeInput.style.border = "none";
           tdValueSizeSize.append(tdValueSizeInput);
           tr.append(tdValueSizeSize);
-          
+
            $("#table").append(tbody);
 
            sumValuesLocal = +sumValuesLocal + parseFloat(value.valueSize);
