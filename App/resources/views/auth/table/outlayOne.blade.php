@@ -2,9 +2,21 @@
 
 @section('content')
 <div class="container card">
-  <div class="container-fluid">
+  <h3 id="update_button">
+    &#9998;
+  </h3>
+  <div class="container">
       @foreach($name as $nameOne)
-      <h3>{{$nameOne-> name}}</h3><h6>Дата создания: {{date('d.m.Y в g:i', strtotime($nameOne->created_at))}}</h6><h6>Изменена: {{date('d.m.Y в g:i', strtotime($nameOne->updated_at))}}</h6>
+      <div class="container row">
+        <div class="col-6">
+          <h3 id="name-outlay">{{$nameOne-> name}}</h3>
+        </div>
+        <div class="col-6">
+          <h6 class="d-flex justify-content-end">Создана: {{date('d.m.Y в g:i', strtotime($nameOne->created_at))}}</h6>
+          <h6 class="d-flex justify-content-end">Измененна: {{date('d.m.Y в g:i', strtotime($nameOne->updated_at))}}</h6>
+        </div>
+      </div>
+
       <table id="table" class="table table-sm caption">
         <thead class="thead-dark">
           <tr>
@@ -17,8 +29,8 @@
       @foreach($data as $one)
       <thead class="thead-light">
         <tr>
-          <th>{{$one->name}}</th>
-          <th>{{$one->amount}}</th>
+          <th class="valueName">{{$one->name}}</th>
+          <th class="valueCost">{{$one->amount}}</th>
         </tr>
       </thead>
       @endforeach
@@ -29,6 +41,11 @@
         </tr>
       </thead>
     </table>
+    <div id="button-update" class="d-none">
+      <form method="post" id="outlay" action="{{route('outlayUpdate', $id)}}">
+        <button type="submit" class="btn btn-warning">Сохранить</button>
+      </form>
+    </div>
   </div>
 </div>
 @endsection

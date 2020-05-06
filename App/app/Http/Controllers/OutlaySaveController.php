@@ -51,7 +51,16 @@ class OutlaySaveController extends Controller
     $rowOutlay =  new RowOutlay();
     $collection = $rowOutlay-> where('name_outlay_id', $id)->get();
     $sum = $collection->pluck('amount')->sum();
-    return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum]);
+    return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum,'id' =>$id]);
+    }
+
+    public function outlayUpdate($id)
+    {
+        $nameOne =  new NameOutlay();
+        $data = $nameOne -> find($id);
+        dd($data);
+        $title = 'Смета с названием «'. $req->input('title').'» изменена';
+        //return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum, 'success' => $title, 'id' =>$id]);
     }
 
 
