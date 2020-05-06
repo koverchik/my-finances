@@ -17,10 +17,10 @@ $("#update_button").click(function() {
       return $('<input name="title" id="title" form="outlay" class="h3">').prop( "value",  $("#name-outlay").html());
     });
     $(".valueName").each(function(index) {
-      $('<input form="outlay" class="col" style="background: none; border: solid 1px white;">').prop( "value",   $(this).text()).appendTo($(this).empty().attr( "name", function(){  return "name" + index; }));
+      $('<input form="outlay" form="outlay" class="col" style="background: none; border: solid 1px white;">').prop( "value",   $(this).text()).attr( "name", function(){  return "name" + index; }).appendTo($(this).empty());
     });
     $(".valueCost").each(function(index) {
-      $('<input form="outlay" class="col" style="background: none;  border: solid 1px white;">').prop( "value",  $(this).text()).appendTo($(this).empty().attr( "name", function(){  return "size" + index; }));
+      $('<input form="outlay" form="outlay" class="col" style="background: none;  border: solid 1px white;">').prop( "value",  $(this).text()).attr( "name", function(){  return "size" + index; }).appendTo($(this).empty());
     });
     $("#button-update").removeAttr("class");
     }

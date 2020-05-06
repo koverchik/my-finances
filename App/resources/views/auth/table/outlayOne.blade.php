@@ -15,7 +15,7 @@
           <h6 class="d-flex justify-content-end">Создана: {{date('d.m.Y в g:i', strtotime($nameOne->created_at))}}</h6>
           <h6 class="d-flex justify-content-end">Измененна: {{date('d.m.Y в g:i', strtotime($nameOne->updated_at))}}</h6>
         </div>
-      </div>
+      </div>  
 
       <table id="table" class="table table-sm caption">
         <thead class="thead-dark">
@@ -43,6 +43,7 @@
     </table>
     <div id="button-update" class="d-none">
       <form method="post" id="outlay" action="{{route('outlayUpdate', $id)}}">
+        @csrf
         <button type="submit" class="btn btn-warning">Сохранить</button>
       </form>
     </div>
