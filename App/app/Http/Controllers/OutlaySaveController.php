@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\NameOutlayRequest;
+use App\Http\Requests\SaveOutlayRequest;
 use App\NameOutlay;
 use App\RowOutlay;
 use App\User;
@@ -54,18 +55,24 @@ class OutlaySaveController extends Controller
     return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum,'id' =>$id]);
     }
 
-    public function outlayUpdate(NameOutlayRequest $req, $id)
+    public function outlayUpdate(SaveOutlayRequest $req, $id)
     {
+
         $nameOne =  new NameOutlay();
         $name = $nameOne -> find($id);
         $name -> name = $req->input('title');
         $name -> save();
-        //это массив с импутами всеми
-        $array_input = $req->input();
-        $RowOutlay =  new RowOutlay();
 
+        
+        //это массив с импутами всеми
+        $collectionName = collect($array_input = $req->input());
+        $filtered = $collectionName->filter(function ($value, $key) {
+          return preg_match('/(name)[0-9]/', $key);
+        });
+
+        $rowOutlay =  new RowOutlay();
         //поиск записией в таблице= приходит два массива со строками name и amount
-        $rows = $RowOutlay->where('name_outlay_id', $id)->get();
+        $rows = $rowOutlay->where('name_outlay_id', $id)->get();
         //перезапись в таблице
         $i = 0;
           foreach ($rows as $row => $value){
@@ -77,8 +84,11 @@ class OutlaySaveController extends Controller
             $i++;
           }
 
-        $title = 'Смета с названием «'. $req->input('title').'» изменена';
-        //return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum, 'success' => $title, 'id' =>$id]);
+        $collection = $rowOutlay-> where('name_outlay_id', $id)->get();
+
+        $sum = $collection->pluck('amount')->sum();
+        $title = 'Смета с названием «'. $req->input('title').'» сохранена';
+        return redirect()-> route('outlayOne', $id)->with(['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum, 'success' => $title, 'id' =>$id]);
     }
 
 

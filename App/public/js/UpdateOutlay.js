@@ -3,6 +3,7 @@ $("#update_button").css("cursor", "pointer");
 $("#update_button").click(function() {
   if($( "#title" ).is("input")){
   $("#button-update").attr("class","d-none");
+  $("#button-add").attr("class","d-none");
   $("#title").replaceWith(function() {
     return $('<h3 id="name-outlay">').text($("#title").val());
   });
@@ -10,7 +11,7 @@ $("#update_button").click(function() {
     $(this).children().replaceWith( $(this).children().val());
   });
   $(".valueCost").each(function(index) {
-    $(this).children().replaceWith( $(this).children().val());
+    $(this).children().replaceWith($(this).children().val());
   });
   }else {
     $("#name-outlay").replaceWith(function() {
@@ -23,5 +24,6 @@ $("#update_button").click(function() {
       $('<input form="outlay" form="outlay" class="col" style="background: none;  border: solid 1px white;">').prop( "value",  $(this).text()).attr( "name", function(){  return "size" + index; }).appendTo($(this).empty());
     });
     $("#button-update").removeAttr("class");
+    $("#button-add").removeAttr("class");
     }
 });

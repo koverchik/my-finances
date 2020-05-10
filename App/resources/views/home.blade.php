@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-6">
                       <a href="#" class="row justify-content-center h3">Кошельки</a>
-                      <d  iv class="row justify-content-center">
+                      <div class="row justify-content-center">
                         <button type="button" class="btn btn-warning"><a href="#" class="text-danger">+ Добавить</a></button>
                       </div>
                     </div>

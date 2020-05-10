@@ -23,6 +23,7 @@ class NameOutlayRequest extends FormRequest
      */
     public function rules()
     {
+      
         return [
             'title' => 'required|max:100',
             'name1' => 'required',
