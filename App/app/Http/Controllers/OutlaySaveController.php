@@ -62,34 +62,40 @@ class OutlaySaveController extends Controller
         $name = $nameOne -> find($id);
         $name -> name = $req->input('title');
         $name -> save();
-
-        
-        //это массив с импутами всеми
         $collectionName = collect($array_input = $req->input());
-        $filtered = $collectionName->filter(function ($value, $key) {
+        $filteredCollectionName = $collectionName->filter(function ($value, $key) {
           return preg_match('/(name)[0-9]/', $key);
         });
+        $countImput = $filteredCollectionName->count();
 
         $rowOutlay =  new RowOutlay();
-        //поиск записией в таблице= приходит два массива со строками name и amount
-        $rows = $rowOutlay->where('name_outlay_id', $id)->get();
-        //перезапись в таблице
+        $rows = collect($rowOutlay->where('name_outlay_id', $id)->get());
+        $countRows = $rows->count();
         $i = 0;
-          foreach ($rows as $row => $value){
-            $name = "name".$i;
-            $amount = "size".$i;
-            $value -> name = $array_input[$name];
-            $value -> amount = $array_input[$amount];
-            $value -> save();
-            $i++;
-          }
+        foreach ($rows as $row => $value){
+          $name = "name".$i;
+          $amount = "size".$i;
+          $value -> name = $array_input[$name];
+          $value -> amount = $array_input[$amount];
+          $value -> save();
+          $i++;}
 
+        if($countImput>$countRows){
+              $spliceCollectionName = $filteredCollectionName->splice($countRows);
+              foreach ($spliceCollectionName as $input => $value){
+                $RowOutlay =  new RowOutlay();
+                preg_match('/[0-9]/', $input, $matches);
+                $name = "name".$matches[0];
+                $amount = "size".$matches[0];
+                $RowOutlay -> name = $req->input($name);
+                $RowOutlay -> amount = $req->input($amount);
+                $RowOutlay -> name_outlay_id = $id;
+                $RowOutlay -> save();
+              }
+        }
         $collection = $rowOutlay-> where('name_outlay_id', $id)->get();
-
         $sum = $collection->pluck('amount')->sum();
         $title = 'Смета с названием «'. $req->input('title').'» сохранена';
         return redirect()-> route('outlayOne', $id)->with(['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum, 'success' => $title, 'id' =>$id]);
+      }
     }
-
-
-}
