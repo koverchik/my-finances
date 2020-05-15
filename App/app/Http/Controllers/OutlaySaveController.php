@@ -57,15 +57,25 @@ class OutlaySaveController extends Controller
 
     public function outlayUpdate(SaveOutlayRequest $req, $id)
     {
+        $collectionName = collect($array_input = $req->input());
+        $filteredCollectionName = $collectionName->filter(function ($value, $key) {
+          return preg_match('/(name)[0-9]/', $key);})->keys()->flip()->map(function ($item, $key) {
+          return $item = 'required|string|max:150|min:2';
+        });
+        $filteredCollectionSize = $collectionName->filter(function ($value, $key) {
+          return preg_match('/(size)[0-9]/', $key);})->keys()->flip()->map(function ($item, $key) {
+          return $item = 'required|numeric';
+        });
 
+        $multipliedName = $filteredCollectionName->toArray();
+        $multipliedSize = $filteredCollectionSize->toArray();
+        $validatedData = $req->validate($multipliedName);
+        $validatedSize = $req->validate($multipliedSize);
         $nameOne =  new NameOutlay();
         $name = $nameOne -> find($id);
         $name -> name = $req->input('title');
         $name -> save();
-        $collectionName = collect($array_input = $req->input());
-        $filteredCollectionName = $collectionName->filter(function ($value, $key) {
-          return preg_match('/(name)[0-9]/', $key);
-        });
+
         $countImput = $filteredCollectionName->count();
 
         $rowOutlay =  new RowOutlay();
