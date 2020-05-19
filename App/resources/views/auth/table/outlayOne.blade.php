@@ -38,7 +38,7 @@
             <th>#</th>
             <th>Наименование</th>
             <th>Стоимость</th>
-          </tr>
+            <th id="empty-row" class="d-none"></th>
         </thead>
       @endforeach
 
@@ -48,13 +48,14 @@
           <th class="valueNamber">{{ $loop->iteration }}</th>
           <th class="valueName">{{$one->name}}</th>
           <th class="valueCost">{{$one->amount}}</th>
+          <th class="trash h4 d-none">	&#128465;</th>
         </tr>
       </thead>
       @endforeach
       <thead>
         <tr>
           <th class="text-right" colspan="2"> Сумма:</th>
-          <th class="bg-info">{{$sum}}</th>
+          <th class="bg-info" id="summ-all" colspan="2">{{$sum}}</th>
         </tr>
       </thead>
     </table>

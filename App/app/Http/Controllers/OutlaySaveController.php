@@ -71,6 +71,7 @@ class OutlaySaveController extends Controller
         $multipliedSize = $filteredCollectionSize->toArray();
         $validatedData = $req->validate($multipliedName);
         $validatedSize = $req->validate($multipliedSize);
+
         $nameOne =  new NameOutlay();
         $name = $nameOne -> find($id);
         $name -> name = $req->input('title');
@@ -81,28 +82,72 @@ class OutlaySaveController extends Controller
         $rowOutlay =  new RowOutlay();
         $rows = collect($rowOutlay->where('name_outlay_id', $id)->get());
         $countRows = $rows->count();
-        $i = 0;
-        foreach ($rows as $row => $value){
-          $name = "name".$i;
-          $amount = "size".$i;
-          $value -> name = $array_input[$name];
-          $value -> amount = $array_input[$amount];
-          $value -> save();
-          $i++;}
 
-        if($countImput>$countRows){
-              $spliceCollectionName = $filteredCollectionName->splice($countRows);
-              foreach ($spliceCollectionName as $input => $value){
-                $RowOutlay =  new RowOutlay();
-                preg_match('/[0-9]/', $input, $matches);
-                $name = "name".$matches[0];
-                $amount = "size".$matches[0];
-                $RowOutlay -> name = $req->input($name);
-                $RowOutlay -> amount = $req->input($amount);
-                $RowOutlay -> name_outlay_id = $id;
-                $RowOutlay -> save();
-              }
+        if($countImput<$countRows){
+          $slice = $rows->slice($countImput);
+          $rows = $rows->slice(0, $countImput);
+
+          foreach($slice as $row => $value){
+                $rowOutlay->where('id', '=', $value->id)->delete();
+          }
+        
+          $i = 0;
+          foreach ($array_input as $input => $value) {
+            if (preg_match('/(name)[0-9]/', $input)){
+              preg_match('/[0-9]/', $input, $matches);
+              $name = "name".$matches[0];
+              $amount = "size".$matches[0];
+              $rows[$i] -> name = $req->input($name);
+              $rows[$i] -> amount = $req->input($amount);
+              $rows[$i] -> name_outlay_id = $id;
+              $rows[$i] -> save();
+              $i++;
+            }
+          }
         }
+          if($countImput>$countRows){
+          $spliceCollectionName = $filteredCollectionName->splice($countRows);
+          foreach ($spliceCollectionName as $input => $value){
+            $RowOutlay =  new RowOutlay();
+            preg_match('/[0-9]/', $input, $matches);
+            $name = "name".$matches[0];
+            $amount = "size".$matches[0];
+            $RowOutlay -> name = $req->input($name);
+            $RowOutlay -> amount = $req->input($amount);
+            $RowOutlay -> name_outlay_id = $id;
+            $RowOutlay -> save();
+        }
+        $array_input = $filteredCollectionName->slice(0, $countRows);
+        $i = 0;
+        foreach ($array_input as $input => $value) {
+          if (preg_match('/(name)[0-9]/', $input)){
+            preg_match('/[0-9]/', $input, $matches);
+            $name = "name".$matches[0];
+            $amount = "size".$matches[0];
+            $rows[$i] -> name = $req->input($name);
+            $rows[$i] -> amount = $req->input($amount);
+            $rows[$i] -> name_outlay_id = $id;
+            $rows[$i] -> save();
+            $i++;
+          }
+        }
+      }
+          if($countImput == $countRows){
+            $i = 0;
+              foreach ($filteredCollectionName as $input => $value) {
+                if (preg_match('/(name)[0-9]/', $input)){
+                  preg_match('/[0-9]/', $input, $matches);
+                  $name = "name".$matches[0];
+                  $amount = "size".$matches[0];
+                  $rows[$i]-> name = $req->input($name);
+                  $rows[$i] -> amount = $req->input($amount);
+                  $rows[$i] -> name_outlay_id =$id;
+                  $rows[$i] -> save();
+                  $i++;
+                }
+              }
+          };
+
         $collection = $rowOutlay-> where('name_outlay_id', $id)->get();
         $sum = $collection->pluck('amount')->sum();
         $title = 'Смета с названием «'. $req->input('title').'» сохранена';

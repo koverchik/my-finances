@@ -69,6 +69,26 @@ $("#button-add-update").click(function() {
     thElemCostInput.setAttribute("name", valueCostName);
     thElemCost.append(thElemCostInput);
     trElem.append(thElemCost);
+
+    let thElemTrash  = document.createElement('th');
+    thElemTrash.setAttribute("class", "trash h4");
+    thElemTrash.style.cursor = "pointer";
+    thElemTrash.innerHTML = "&#128465"
+    trElem.append(thElemTrash);
+
+
     $('.thead-light').last().after(theadElem);
-  }
-})
+    $(".trash").mouseenter(function() {$( this ).parent().css("opacity", "0.3")}).mouseleave(function(){$( this ).parent().removeAttr("style")});
+    $(".trash").on("click", function() {
+    $( this ).parent().remove();
+  });
+}
+});
+  $(".trash").mouseenter(function() {$( this ).parent().css("opacity", "0.3")}).mouseleave(function(){$( this ).parent().removeAttr("style")});
+  $(".trash").on("click", function() {
+    if($(".trash").length == 1){
+          $("#table").after("<div id='danger-message-cost' class='col alert alert-danger'>Таблица не может быть пустой</div>");
+    }else{
+        $( this ).parent().remove();
+    }
+  } );

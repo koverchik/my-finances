@@ -1,4 +1,5 @@
 $("#update_button").css("cursor", "pointer");
+$(".trash").css("cursor", "pointer");
 function apdateOutlay() {
   $("#name-outlay").replaceWith(function() {
     return $('<input name="title" id="title" form="outlay" class="h3">').prop( "value",  $("#name-outlay").html());
@@ -11,6 +12,8 @@ function apdateOutlay() {
   });
   $("#button-update").removeAttr("class");
   $("#button-add").removeAttr("class");
+  $("#empty-row").removeAttr("class");
+  $(".trash").removeClass("d-none");
 }
 if($( "#errors-message" ).is("div")){
   apdateOutlay();
@@ -19,6 +22,8 @@ $("#update_button").click(function() {
   if($( "#title" ).is("input")){
   $("#button-update").attr("class","d-none");
   $("#button-add").attr("class","d-none");
+  $("#empty-row").attr("class","d-none");
+  $(".trash").addClass("d-none");
   $("#title").replaceWith(function() {
     return $('<h3 id="name-outlay">').text($("#title").val());
   });
