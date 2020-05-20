@@ -1,6 +1,5 @@
 $("#button-add-update").click(function() {
-  if($('.valueCost input').last().val() == ""||$('.valueName input').last().val()== ""){
-
+    if($('.valueCost input').last().val() == ""||$('.valueName input').last().val()== ""){
     if(!$("div").is('#danger-message')){
       $("#table").after("<div id='danger-message' class='col alert alert-danger'>Поля обязательны для заполненния</div>");
     }
@@ -15,8 +14,7 @@ $("#button-add-update").click(function() {
     }
 
   }else if($('.valueCost input').last().val().search(/^([0-9]|[0-9(,|.)0-9])/) == -1){
-      $("#table").after("<div id='danger-message-cost' class='col alert alert-danger'>Стоимость необходимо ввести в числовом формате</div>");
-
+      $("#table").after("<div id='danger-message-cost' class='col alert alert-danger'>Необходимо ввести стоимость в числовом формате</div>");
   }else {
     //Удаление предупредительных сообщений
     if($("div").is('#danger-message')){
