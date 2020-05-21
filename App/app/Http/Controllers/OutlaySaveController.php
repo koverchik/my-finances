@@ -52,7 +52,11 @@ class OutlaySaveController extends Controller
     $rowOutlay =  new RowOutlay();
     $collection = $rowOutlay-> where('name_outlay_id', $id)->get();
     $sum = $collection->pluck('amount')->sum();
-    return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum,'id' =>$id]);
+    $rowUpdate =  new RowOutlay();
+    $lastUpdate = $rowUpdate->where('name_outlay_id', $id)->get('updated_at')->max();
+    preg_match('/([0-9]+\-[0-9]+\-[0-9]+)T([0-9]+:[0-9]+:[0-9]+)/', $lastUpdate, $matches);
+    $matches = $matches[1] . " ". $matches[2];
+    return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum,'id' =>$id,'lastUpdate' => $matches]);
     }
 
     public function outlayUpdate(SaveOutlayRequest $req, $id)
@@ -81,6 +85,7 @@ class OutlaySaveController extends Controller
 
         $rowOutlay =  new RowOutlay();
         $rows = collect($rowOutlay->where('name_outlay_id', $id)->get());
+
         $countRows = $rows->count();
 
         if($countImput<$countRows){
@@ -90,7 +95,7 @@ class OutlaySaveController extends Controller
           foreach($slice as $row => $value){
                 $rowOutlay->where('id', '=', $value->id)->delete();
           }
-        
+
           $i = 0;
           foreach ($array_input as $input => $value) {
             if (preg_match('/(name)[0-9]/', $input)){
@@ -134,6 +139,7 @@ class OutlaySaveController extends Controller
       }
           if($countImput == $countRows){
             $i = 0;
+
               foreach ($filteredCollectionName as $input => $value) {
                 if (preg_match('/(name)[0-9]/', $input)){
                   preg_match('/[0-9]/', $input, $matches);
@@ -144,13 +150,16 @@ class OutlaySaveController extends Controller
                   $rows[$i] -> name_outlay_id =$id;
                   $rows[$i] -> save();
                   $i++;
-                }
+                    }
               }
           };
-
+        $rowUpdate =  new RowOutlay();
+        $lastUpdate = $rowUpdate->where('name_outlay_id', $id)->get('updated_at')->max();
+        preg_match('/([0-9]+\-[0-9]+\-[0-9]+)T([0-9]+:[0-9]+:[0-9]+)/', $lastUpdate, $matches);
+        $matches = $matches[1] . " ". $matches[2];
         $collection = $rowOutlay-> where('name_outlay_id', $id)->get();
         $sum = $collection->pluck('amount')->sum();
         $title = 'Смета с названием «'. $req->input('title').'» сохранена';
-        return redirect()-> route('outlayOne', $id)->with(['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum, 'success' => $title, 'id' =>$id]);
+        return redirect()->route('outlayOne', $id)->with(['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(), 'lastUpdate' => $lastUpdate,'sum' => $sum, 'success' => $title, 'id' =>$id]);
       }
     }

@@ -21,6 +21,7 @@
     </div>
 
     @endif
+
       @foreach($name as $nameOne)
       <div class="container row">
         <div class="col-6">
@@ -28,7 +29,7 @@
         </div>
         <div class="col-6">
           <h6 class="d-flex justify-content-end">Создана: {{date('d.m.Y в g:i', strtotime($nameOne->created_at))}}</h6>
-          <h6 class="d-flex justify-content-end">Измененна: {{date('d.m.Y в g:i', strtotime($nameOne->updated_at))}}</h6>
+          <h6 class="d-flex justify-content-end">Измененна: {{date('d.m.Y в g:i', strtotime($lastUpdate))}}</h6>
         </div>
       </div>
 
@@ -45,7 +46,7 @@
       @foreach($data as $one)
       <thead class="thead-light">
         <tr>
-          <th class="valueNamber">{{ $loop->iteration }}</th>
+          <th class="valueNamber">{{$loop->iteration}}</th>
           <th class="valueName">{{$one->name}}</th>
           <th class="valueCost">{{$one->amount}}</th>
           <th class="trash h4 d-none">	&#128465;</th>
