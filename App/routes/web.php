@@ -22,13 +22,15 @@ Route::get('/outlay', function () {
 });
 
 Auth::routes();
-
+// Домашняя страница
 Route::get('/home', 'HomeController@index')->name('home');
-
+// ???
 Route::post('home/outlay-save/all', 'OutlaySaveController@saveOutlay')->name('outlaySave');
-
-Route::get('/outlay/all/{id}', 'OutlaySaveController@allOutlay')->name('outlays');
-
+//Список смет
+Route::get('home/outlay/all/', 'OutlaySaveController@allOutlay')->name('outlays');
+// Одна смета
 Route::get('home/outlay/{id}', 'OutlaySaveController@outlayOne')->name('outlayOne');
-
+// Обнавление сметы
 Route::post('home/outlay/{id}/update', 'OutlaySaveController@outlayUpdate')->name('outlayUpdate');
+// Удаление сметы
+Route::post('home/outlay/{id}/delete', 'OutlaySaveController@outlayDelete')->name('outlayDelete');

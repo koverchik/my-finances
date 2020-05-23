@@ -43,7 +43,16 @@ class OutlaySaveController extends Controller
     {
       $namesOutlay =  new NameOutlay();
       $userId = auth()->user()->id;
-      return view('auth.table.saveOutlay', ['data' => $namesOutlay -> where('user_id', $userId)->get()]);
+      $arrayLastData =  collect($namesOutlay -> where('user_id', $userId)->get('id'));
+      $arrayLastData = $arrayLastData->map(function ($item, $key) {
+        $rowUpdate =  new RowOutlay();
+        $lastUpdate = $rowUpdate->where('name_outlay_id', $item-> id)->get('updated_at')->max();
+        preg_match('/([0-9]+\-[0-9]+\-[0-9]+)T([0-9]+:[0-9]+:[0-9]+)/', $lastUpdate, $matches);
+        $matches = $matches[1] . " ". $matches[2];
+        return $matches;
+        });
+      
+      return view('auth.table.outlaySavedAll', ['data' => $namesOutlay -> where('user_id', $userId)->get(),'arrayLastData' => $arrayLastData]);
     }
 
     public function outlayOne($id)
@@ -162,4 +171,9 @@ class OutlaySaveController extends Controller
         $title = 'Смета с названием «'. $req->input('title').'» сохранена';
         return redirect()->route('outlayOne', $id)->with(['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(), 'lastUpdate' => $lastUpdate,'sum' => $sum, 'success' => $title, 'id' =>$id]);
       }
+
+        public function outlayDelete(SaveOutlayRequest $id){
+          dd("работает");
+          // $rowOutlay->where('id', '=', $value->id)->delete();
+        }
     }

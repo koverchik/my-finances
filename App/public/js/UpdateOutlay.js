@@ -1,4 +1,11 @@
 $("#update_button").css("cursor", "pointer");
+$("#update_button").hover(
+  function() {
+    $( this ).addClass( "text-primary" );
+  }, function() {
+    $( this ).removeClass( "text-primary" );
+  }
+);
 $(".trash").css("cursor", "pointer");
 function apdateOutlay() {
   $("#name-outlay").replaceWith(function() {

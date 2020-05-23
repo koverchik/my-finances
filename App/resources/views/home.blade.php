@@ -23,7 +23,7 @@
                 <div class="container-fluid">
                   <div class="row">
                     <div class="col-6">
-                      <a href="/outlay/all/{{ Auth::user()->id }}" class="row justify-content-center h3">Семеты</a>
+                      <a href="{{route('outlays')}}" class="row justify-content-center h3">Семеты</a>
                       <ul>
                       @foreach ($data as $el)
                         <li><a href="{{route('outlayOne', $el->id)}}">{{$el->name}}</a></li>

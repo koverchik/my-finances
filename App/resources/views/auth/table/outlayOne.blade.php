@@ -1,10 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container card">
-  <h3 id="update_button">
-    &#9998;
-  </h3>
+<div class="container card pt-3 pb-3">
+  <div class="d-flex justify-content-between">
+    <h3 id="update_button" >
+      &#9998;
+    </h3>
+    <h3 id="delete-table">
+      &#10008;
+    </h3>
+  </div>
+  <div class="alert alert-danger" role="alert">
+    <strong class="mr-auto">Удаление</strong>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"></button>
+    <div class="toast-body">
+      Вы действительно хотите удалить таблицу?
+    </div>
+    <form method="post" id="delete-outlay" action="{{route('outlayDelete', $id)}}">
+      @csrf
+      <button type="submit" form="delete-outlay" class="btn btn-danger">Удалить</button>
+    </form>
+</div>
   <div class="container">
     @if (session('success'))
     <div class="alert alert-success">
@@ -68,7 +84,7 @@
     <div id="button-update" class="d-none">
       <form method="post" id="outlay" action="{{route('outlayUpdate', $id)}}">
         @csrf
-        <button type="submit" class="btn btn-warning">Сохранить</button>
+        <button type="submit" form="outlay" class="btn btn-warning">Сохранить</button>
       </form>
     </div>
   </div>
