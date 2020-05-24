@@ -30,13 +30,13 @@
                       @endforeach
                     </ul>
                       <div class="row justify-content-center">
-                        <button type="button" class="btn btn-warning"><a target="_blank" class="text-danger" href="/outlay">+ Добавить</a></button>
+                        <button type="button" class="btn btn-warning"><a target="_blank" class="text-danger alert-link text-decoration-none" href="/outlay">+ Добавить</a></button>
                       </div>
                     </div>
                     <div class="col-6">
                       <a href="#" class="row justify-content-center h3">Кошельки</a>
                       <div class="row justify-content-center">
-                        <button type="button" class="btn btn-warning"><a href="#" class="text-danger">+ Добавить</a></button>
+                        <button type="button" class="btn btn-warning"><a href="#" class="text-danger alert-link text-decoration-none">+ Добавить</a></button>
                       </div>
                     </div>
                   </div>

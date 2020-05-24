@@ -6,22 +6,12 @@
     <h3 id="update_button" >
       &#9998;
     </h3>
-    <h3 id="delete-table">
-      &#10008;
-    </h3>
+    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#deleteModal">
+        &#10008;
+    </button>
   </div>
-  <div class="alert alert-danger" role="alert">
-    <strong class="mr-auto">Удаление</strong>
-      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"></button>
-    <div class="toast-body">
-      Вы действительно хотите удалить таблицу?
-    </div>
-    <form method="post" id="delete-outlay" action="{{route('outlayDelete', $id)}}">
-      @csrf
-      <button type="submit" form="delete-outlay" class="btn btn-danger">Удалить</button>
-    </form>
-</div>
-  <div class="container">
+
+  <div class="container pt-3">
     @if (session('success'))
     <div class="alert alert-success">
       {{session('success')}}
@@ -86,6 +76,25 @@
         @csrf
         <button type="submit" form="outlay" class="btn btn-warning">Сохранить</button>
       </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="deleteModal"  role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header alert alert-danger">
+        <h5 class="modal-title" id="deleteModalLabel">Удаление</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Вы действительно хотите удалить таблицу?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger"><a class="text-warning text-decoration-none alert-link"href="{{route('outlayDelete', $id)}}">Удалить</a></button>
+        <button type="button" class="btn btn-secondary alert-link" data-dismiss="modal">Отмена</button>
+      </div>
     </div>
   </div>
 </div>

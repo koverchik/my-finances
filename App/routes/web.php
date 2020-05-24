@@ -33,4 +33,4 @@ Route::get('home/outlay/{id}', 'OutlaySaveController@outlayOne')->name('outlayOn
 // Обнавление сметы
 Route::post('home/outlay/{id}/update', 'OutlaySaveController@outlayUpdate')->name('outlayUpdate');
 // Удаление сметы
-Route::post('home/outlay/{id}/delete', 'OutlaySaveController@outlayDelete')->name('outlayDelete');
+Route::get('home/outlay/{id}/delete', 'OutlaySaveController@outlayDelete')->name('outlayDelete');

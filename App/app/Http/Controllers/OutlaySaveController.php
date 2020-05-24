@@ -22,7 +22,6 @@ class OutlaySaveController extends Controller
       $array_input = $req->input();
 
       foreach ($array_input as $input => $value) {
-
         if (preg_match('/(name)[0-9]/', $input)){
             $RowOutlay =  new RowOutlay();
             preg_match('/[0-9]/', $input, $matches);
@@ -51,7 +50,6 @@ class OutlaySaveController extends Controller
         $matches = $matches[1] . " ". $matches[2];
         return $matches;
         });
-      
       return view('auth.table.outlaySavedAll', ['data' => $namesOutlay -> where('user_id', $userId)->get(),'arrayLastData' => $arrayLastData]);
     }
 
@@ -172,8 +170,11 @@ class OutlaySaveController extends Controller
         return redirect()->route('outlayOne', $id)->with(['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(), 'lastUpdate' => $lastUpdate,'sum' => $sum, 'success' => $title, 'id' =>$id]);
       }
 
-        public function outlayDelete(SaveOutlayRequest $id){
-          dd("работает");
-          // $rowOutlay->where('id', '=', $value->id)->delete();
+        public function outlayDelete($id){
+        $nameOutlay =  new NameOutlay();
+        $name = $nameOutlay-> where('id', '=', $id)->get('name');
+        $nameOutlay->where('id', '=', $id)->delete();
+        $title = 'Смета с названием «'. $name[0]['name'].'» удалена';
+        return redirect()-> route('outlays')->with('success', $title);
         }
     }
