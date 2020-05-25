@@ -25,7 +25,7 @@ Auth::routes();
 // Домашняя страница
 Route::get('/home', 'HomeController@index')->name('home');
 // ???
-Route::post('home/outlay-save/all', 'OutlaySaveController@saveOutlay')->name('outlaySave');
+Route::post('home/outlay/save', 'OutlaySaveController@saveOutlay')->name('outlaySave');
 //Список смет
 Route::get('home/outlay/all/', 'OutlaySaveController@allOutlay')->name('outlays');
 // Одна смета

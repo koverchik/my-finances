@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('scripts')
+<script src="{{ asset('js/WebStorage.js')}}" defer></script>
+@endpush
+
 @section('content')
   <div class="container">
       <h2>Смета</h2>

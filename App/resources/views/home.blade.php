@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card pb-3">
                 <div class="card-header">Мой аккаунт</div>
 
                 <div class="card-body">
@@ -24,9 +24,9 @@
                   <div class="row">
                     <div class="col-6">
                       <a href="{{route('outlays')}}" class="row justify-content-center h3">Семеты</a>
-                      <ul>
+                      <ul class="list-group pt-3 pb-3">
                       @foreach ($data as $el)
-                        <li><a href="{{route('outlayOne', $el->id)}}">{{$el->name}}</a></li>
+                        <li class="list-group-item"><a href="{{route('outlayOne', $el->id)}}">{{$el->name}}</a></li>
                       @endforeach
                     </ul>
                       <div class="row justify-content-center">

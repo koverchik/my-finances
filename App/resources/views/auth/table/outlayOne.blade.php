@@ -92,7 +92,7 @@
         Вы действительно хотите удалить таблицу?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger"><a class="text-warning text-decoration-none alert-link"href="{{route('outlayDelete', $id)}}">Удалить</a></button>
+        <button type="button" class="btn btn-danger"><a class="text-warning text-decoration-none alert-link" href="{{route('outlayDelete', $id)}}">Удалить</a></button>
         <button type="button" class="btn btn-secondary alert-link" data-dismiss="modal">Отмена</button>
       </div>
     </div>
