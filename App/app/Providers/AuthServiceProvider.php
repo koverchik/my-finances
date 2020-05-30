@@ -24,7 +24,27 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        //Просмотр
+        Gate::define('watchOutlay', function ($user, $id) {
+          if($user->id == $id[0]['user_id']){
+            return true;
+          }else{
+            return false;
+          }
+        });
+        Gate::define('deleteOutlay', function ($user, $id) {
+          if($user->id == $id[0]['user_id']){
+            return true;
+          }else{
+            return false;
+          }
+        });
+        Gate::define('updateOutlay', function ($user, $id) {
+          if($user->id == $id[0]['user_id']){
+            return true;
+          }else{
+            return false;
+          }
+        });
     }
 }
