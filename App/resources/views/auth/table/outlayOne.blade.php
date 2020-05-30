@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@push('scripts')
+<script src="{{ asset('js/UpdateOutlay.js')}}" defer></script>
+<script src="{{ asset('js/UpdateAddOutlay.js')}}" defer></script>
+@endpush
+
 @section('content')
 <div class="container card pt-3 pb-3">
   <div class="d-flex justify-content-between">
