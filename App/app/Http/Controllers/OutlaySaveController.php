@@ -201,6 +201,7 @@ class OutlaySaveController extends Controller
         $id_owner = $nameOutlay -> where('id', $id)->get('user_id');
 
         if (Gate::allows('watchOutlay', $id_owner)){
+          DB::table('powers')->where('name_outlay_id', $id)->delete();
           $name = $nameOutlay-> where('id', '=', $id)->get('name');
           $nameOutlay->where('id', '=', $id)->delete();
           $title = 'Смета с названием «'. $name[0]['name'].'» удалена';
