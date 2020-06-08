@@ -33,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
           }
         });
         Gate::define('deleteOutlay', function ($user, $id) {
+
           if($user->id == $id[0]['user_id']){
             return true;
           }else{

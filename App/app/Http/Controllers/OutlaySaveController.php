@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Requests\NameOutlayRequest;
 use App\Http\Requests\SaveOutlayRequest;
@@ -41,17 +43,26 @@ class OutlaySaveController extends Controller
 
     public function allOutlay(Request $request)
     {
-      $namesOutlay =  new NameOutlay();
-      $userId = auth()->user()->id;
-      $arrayLastData =  collect($namesOutlay -> where('user_id', $userId)->get('id'));
-      $arrayLastData = $arrayLastData->map(function ($item, $key) {
+      $users = DB::table('powers')->where('user_id', auth()->user()->id)->get('name_outlay_id');
+
+      $arrayNames = $users->flatMap(function ($item) {
+        $arrayName = DB::table('name_outlay')-> where('id', $item->name_outlay_id)->get();
+        return $arrayName;
+            });
+      $itemOutlay = $users->flatMap(function ($item) {
+        $itemOutlay  = DB::table('powers')->where('name_outlay_id', $item->name_outlay_id)->join('users', 'powers.user_id', '=', 'users.id')->get();
+        return $itemOutlay;
+            });
+
+        $arrayLastData = $users->map(function ($item, $key) {
         $rowUpdate =  new RowOutlay();
-        $lastUpdate = $rowUpdate->where('name_outlay_id', $item-> id)->get('updated_at')->max();
+        $lastUpdate = $rowUpdate->where('name_outlay_id', $item-> name_outlay_id)->get('updated_at')->max();
         preg_match('/([0-9]+\-[0-9]+\-[0-9]+)T([0-9]+:[0-9]+:[0-9]+)/', $lastUpdate, $matches);
         $matches = $matches[1] . " ". $matches[2];
         return $matches;
         });
-      return view('auth.table.outlaySavedAll', ['data' => $namesOutlay -> where('user_id', $userId)->get(),'arrayLastData' => $arrayLastData]);
+
+      return view('auth.table.outlaySavedAll', ['arrayLastData' => $arrayLastData, 'arrayNames' => $arrayNames, 'itemOutlay'=>$itemOutlay]);
     }
 
     public function outlayOne($id)
