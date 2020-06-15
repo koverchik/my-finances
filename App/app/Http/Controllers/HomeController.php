@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\NameOutlay;
 
 class HomeController extends Controller
@@ -24,10 +25,15 @@ class HomeController extends Controller
      */
     public function index(Request $req)
     {
+        $tables = collect(DB::table('powers')->where('user_id', auth()->user()->id)->get('name_outlay_id'));
+        $namesOutlay = $tables->flatMap(function ($values) {
+          $values = collect(DB::table('name_outlay')->where('id', $values->name_outlay_id)->get());
+          return $values;
+        });
+
         $id_user = $req->user();
         $id = $id_user['id'];
-        $namesOutlay = NameOutlay::where('user_id', $id)->get();
-        return view('home',  ['data' => $namesOutlay, $id => $id]);
+          return view('home',  ['data' => $namesOutlay, $id => $id]);
     }
 
 }
