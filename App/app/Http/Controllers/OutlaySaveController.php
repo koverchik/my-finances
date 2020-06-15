@@ -189,14 +189,12 @@ class OutlaySaveController extends Controller
           $sum = $collection->pluck('amount')->sum();
           $title = 'Смета с названием «'. $req->input('title').'» сохранена';
           return redirect()->route('outlayOne', $id)->with(['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(), 'lastUpdate' => $lastUpdate,'sum' => $sum, 'success' => $title, 'id' =>$id]);
-
         }else{
           return view('auth.table.accessDeniedUpdate');
         }
       }
 
         public function outlayDelete($id){
-
         $nameOutlay =  new NameOutlay();
         $id_owner = $nameOutlay -> where('id', $id)->get('user_id');
 
@@ -209,6 +207,77 @@ class OutlaySaveController extends Controller
         }else{
           return view('auth.table.accessDeviedDelete');
         }
+      }
+      public function outlayPowers(Request $reg, $id){
+      $collectionAll = collect($reg->request);
 
+      $collectionId = $collectionAll->filter(function ($item, $key) {
+                  return preg_match('/(nameId)([0-9])/', $key, $matches);
+      });
+
+        function updateDataPowers($collectionAll, $collectionId, $id){
+
+          $viewItem = "/(view)(".$collectionId.")/";
+           if(preg_match($viewItem, $collectionAll, $matches)){
+             DB::table('powers')
+                           ->where('name_outlay_id', $id)
+                           ->where('user_id', $collectionId)
+                           ->update(['look_outlay' => 1]);
+                  }else{
+                    DB::table('powers')
+                                  ->where('name_outlay_id', $id)
+                                  ->where('user_id', $collectionId)
+                                  ->update(['look_outlay' => 0]);
+                  }
+
+           $updateItem = "/(update)(".$collectionId.")/";
+           if(preg_match($updateItem, $collectionAll, $matches)){
+             DB::table('powers')
+                           ->where('name_outlay_id', $id)
+                           ->where('user_id', $collectionId)
+                           ->update(['update_outlay' => 1]);
+                  }else{
+                    DB::table('powers')
+                                  ->where('name_outlay_id', $id)
+                                  ->where('user_id', $collectionId)
+                                  ->update(['update_outlay' => 0]);
+                  }
+
+
+          $deleteItem = "/(delete)(".$collectionId.")/";
+          if(preg_match($deleteItem, $collectionAll, $matches)){
+            DB::table('powers')
+                          ->where('name_outlay_id', $id)
+                          ->where('user_id', $collectionId)
+                          ->update(['delete_outlay' => 1]);
+                 }else{
+                   DB::table('powers')
+                                 ->where('name_outlay_id', $id)
+                                 ->where('user_id', $collectionId)
+                                 ->update(['delete_outlay' => 0]);
+                 }
+
+           $abilityItem = "/(ability)(".$collectionId.")/";
+            if(preg_match($abilityItem, $collectionAll, $matches)){
+              DB::table('powers')
+                            ->where('name_outlay_id', $id)
+                            ->where('user_id', $collectionId)
+                            ->update(['ability_outlay' => 1]);
+                   }else{
+                     DB::table('powers')
+                                   ->where('name_outlay_id', $id)
+                                   ->where('user_id', $collectionId)
+                                   ->update(['ability_outlay' => 0]);
+                   }
         }
+
+        foreach ($collectionId as &$value) {
+          updateDataPowers($collectionAll, $value, $id);
+        }
+        $nameOutlay =  new NameOutlay();
+        $id_owner = $nameOutlay -> where('id', $id)->pluck('name');
+
+        $title = 'Изменения полномочй в смете «'. $id_owner[0] .'» сохранены';
+        return redirect()-> route('outlays')->with('success', $title);
+      }
     }

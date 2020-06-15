@@ -34,3 +34,5 @@ Route::get('home/outlay/{id}', 'OutlaySaveController@outlayOne')->name('outlayOn
 Route::post('home/outlay/{id}/update', 'OutlaySaveController@outlayUpdate')->name('outlayUpdate');
 // Удаление сметы
 Route::get('home/outlay/{id}/delete', 'OutlaySaveController@outlayDelete')->name('outlayDelete');
+//Обнавление полномочий
+Route::post('home/outlay/{id}/powers', 'OutlaySaveController@outlayPowers')->name('outlayPowers');
