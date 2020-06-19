@@ -67,9 +67,9 @@ class OutlaySaveController extends Controller
 
     public function outlayOne($id)
     {
-      $nameOne =  new NameOutlay();
-      $id_owner = $nameOne -> where('id', $id)->get('user_id');
-      if (Gate::allows('watchOutlay', $id_owner)) {
+
+        if (Gate::allows('watchOutlay', $id)) {
+        $nameOne =  new NameOutlay();
         $rowOutlay =  new RowOutlay();
         $collection = $rowOutlay-> where('name_outlay_id', $id)->get();
         $sum = $collection->pluck('amount')->sum();
@@ -80,16 +80,14 @@ class OutlaySaveController extends Controller
         return view('auth.table.outlayOne',['data' => $rowOutlay-> where('name_outlay_id', $id)->get(),'name' => $nameOne-> where('id', $id)->get(),'sum' => $sum,'id' =>$id,'lastUpdate' => $matches]);
       } else {
         return view('auth.table.accessDenied');
-
       }
       exit;
     }
 
     public function outlayUpdate(SaveOutlayRequest $req, $id)
     {
-    $nameOne =  new NameOutlay();
-    $id_owner = $nameOne -> where('id', $id)->get('user_id');
-    if(Gate::allows('updateOutlay', $id_owner)){
+    if(Gate::allows('updateOutlay', $id)){
+      $nameOne =  new NameOutlay();
       $collectionName = collect($array_input = $req->input());
       $filteredCollectionName = $collectionName->filter(function ($value, $key) {
         return preg_match('/(name)[0-9]/', $key);})->keys()->flip()->map(function ($item, $key) {
@@ -194,11 +192,10 @@ class OutlaySaveController extends Controller
         }
       }
 
-        public function outlayDelete($id){
+      public function outlayDelete($id){
         $nameOutlay =  new NameOutlay();
-        $id_owner = $nameOutlay -> where('id', $id)->get('user_id');
 
-        if (Gate::allows('watchOutlay', $id_owner)){
+        if (Gate::allows('deleteOutlay', $id)){
           DB::table('powers')->where('name_outlay_id', $id)->delete();
           $name = $nameOutlay-> where('id', '=', $id)->get('name');
           $nameOutlay->where('id', '=', $id)->delete();
@@ -208,7 +205,9 @@ class OutlaySaveController extends Controller
           return view('auth.table.accessDeviedDelete');
         }
       }
+
       public function outlayPowers(Request $reg, $id){
+
       $collectionAll = collect($reg->request);
 
       $collectionId = $collectionAll->filter(function ($item, $key) {

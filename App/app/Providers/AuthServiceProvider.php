@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -24,24 +25,26 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        //Просмотр
+
         Gate::define('watchOutlay', function ($user, $id) {
-          if($user->id == $id[0]['user_id']){
+        $accessUser = collect(DB::table('powers')->where('name_outlay_id', $id)->where('user_id', $user->id)->pluck('look_outlay'));
+          if($accessUser[0] == 1){
             return true;
           }else{
             return false;
           }
         });
         Gate::define('deleteOutlay', function ($user, $id) {
-
-          if($user->id == $id[0]['user_id']){
+          $accessUser = collect(DB::table('powers')->where('name_outlay_id', $id)->where('user_id', $user->id)->pluck('delete_outlay'));
+          if($accessUser[0] == 1){
             return true;
           }else{
             return false;
           }
         });
         Gate::define('updateOutlay', function ($user, $id) {
-          if($user->id == $id[0]['user_id']){
+          $accessUser = collect(DB::table('powers')->where('name_outlay_id', $id)->where('user_id', $user->id)->pluck('update_outlay'));
+          if($accessUser[0] == 1){
             return true;
           }else{
             return false;
