@@ -40,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
             return true;
           }else{
             return false;
+          
           }
         });
         Gate::define('updateOutlay', function ($user, $id) {

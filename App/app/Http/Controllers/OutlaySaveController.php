@@ -23,6 +23,8 @@ class OutlaySaveController extends Controller
       $nameOutlay -> user_id = $id;
       $nameOutlay -> save();
       $array_input = $req->input();
+      $id_query = $nameOutlay->id;
+
 
       foreach ($array_input as $input => $value) {
         if (preg_match('/(name)[0-9]/', $input)){
@@ -36,6 +38,9 @@ class OutlaySaveController extends Controller
             $RowOutlay -> save();
           }
       }
+
+      DB::table('powers')->insert(
+        ['name_outlay_id' => $id_query, 'user_id' => $id, 'delete_outlay' => 1, 'update_outlay' => 1, 'look_outlay' => 1, 'ability_outlay' => 1]);
 
       $title = 'Смета с названием «'. $req->input('title').'» сохранена';
       return redirect()-> route('home')->with('success', $title);
