@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('scripts')
+<script src="{{ asset('js/AddUsers.js')}}" defer></script>
+@endpush
+
 @section('content')
 <div class="container card pt-3 pb-3">
   @if (session('success'))
@@ -14,7 +18,7 @@
     <div class="container card mt-3">
       <div class="container mt-3 card-header">
         <div class="d-flex justify-content-between">
-          <div>
+          <div id="nameOneOutlay{{$oneNote->id}}">
             <p class="d-inline-flex h5">{{$loop->iteration}}. </p>
             <a class="h3 " href="{{route('outlayOne', $oneNote->id )}}">
               {{$oneNote->name}}
@@ -48,6 +52,7 @@
            ">
             <div class="col-4 pt-2 pb-2">
             {{$discribe->name}}
+
              <input type="hidden" form="outlayPowers{{$oneNote->id}}" name="nameId{{$discribe->user_id}}" value="{{$discribe->id}}">
             </div>
             <div class="text-center col-2 pt-2 pb-2 border-bottom border-info">
@@ -94,6 +99,32 @@
             @endif
         @endforeach
         @if ($discribe->ability_outlay === 1)
+        <div id="AddUsersModal{{$discribe->name_outlay_id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Поиск</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form action="{{ route('searchName') }}" method="POST" role="search">
+              {{ csrf_field() }}
+                <div class="modal-body">
+                    <input class="form-control mr-sm-2 searchName" type="text" autocomplete="off" placeholder="Имя или E-mail">
+                    <ul class="result-search-names">
+                    </ul>
+                </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Добавить</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+        <div class="text-center pt-2">
+          <button id="add-new-user" type="button"  class="btn btn-primary rounded-0" data-toggle="modal" data-target="#AddUsersModal{{$discribe->name_outlay_id}}"> + Пользователь</button>
+        </div>
         <div class="d-flex justify-content-end">
           <form method="post" id="outlayPowers{{$oneNote->id}}" action="{{route('outlayPowers', $oneNote->id)}}">
             @csrf
@@ -115,7 +146,7 @@
             </button>
           </div>
           <div class="modal-body">
-            Вы действительно хотите удалить таблицу?
+            Вы действительно удалить таблицу?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger"><a class="text-warning text-decoration-none alert-link" href="/home/outlay/{{$oneNote->id}}/delete">Удалить</a></button>

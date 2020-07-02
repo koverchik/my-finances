@@ -36,3 +36,7 @@ Route::post('home/outlay/{id}/update', 'OutlaySaveController@outlayUpdate')->nam
 Route::get('home/outlay/{id}/delete', 'OutlaySaveController@outlayDelete')->name('outlayDelete');
 //Обнавление полномочий
 Route::post('home/outlay/{id}/powers', 'OutlaySaveController@outlayPowers')->name('outlayPowers');
+//Поиск пользователя
+Route::get('home/outlay/all/searchName', 'OutlaySaveController@searchName')->name('searchName');
+//Сохранение пользователя
+Route::post('home/outlay/all/searchName', 'OutlaySaveController@searchName')->name('searchName');

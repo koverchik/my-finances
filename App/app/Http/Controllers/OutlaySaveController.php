@@ -284,4 +284,28 @@ class OutlaySaveController extends Controller
         $title = 'Изменения полномочй в смете «'. $id_owner[0] .'» сохранены';
         return redirect()-> route('outlays')->with('success', $title);
       }
+
+      public function searchName(Request $reg){
+
+        if($reg->ajax()){
+        $query = $reg->get('data');
+
+          if($query != ''){
+           $data = DB::table('users')
+             ->where('name', 'like', '%'.$query.'%')
+             ->orWhere('email', 'like', '%'.$query.'%')
+             ->orderBy('name', 'desc')
+             ->get();
+
+            }
+          else
+          {
+           $data = DB::table('users')
+             ->orderBy('id', 'desc')
+             ->get();
+          }
+        return response()->json($data);
+      }
+
     }
+  }
