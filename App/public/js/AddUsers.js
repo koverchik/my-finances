@@ -27,9 +27,12 @@ $(document).ready(function () {
                             $(this).children().addClass('dropdown-item border border-top-0');
                               }
                             let idOutlay = $(this).parents(".modal").attr("id").substr(13);
-                            let existingPowersUsers = $('input').filter(function() {
+                            let nameOneOutlay = "#nameOneOutlay"+idOutlay;
+
+                            let existingPowersUsers = $(nameOneOutlay).find('input').filter(function() {
                               return this.name.match(/(nameId)\d+/);
                             });
+                          
                             existingPowersUsers.each(function(index, value){
                               let elemId = "#elemId" + value['value'];
                               if($('.result-search-names').children(elemId).is(elemId)==true){

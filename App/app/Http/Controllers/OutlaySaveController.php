@@ -306,6 +306,6 @@ class OutlaySaveController extends Controller
           }
         return response()->json($data);
       }
-
+      dd($reg);
     }
   }

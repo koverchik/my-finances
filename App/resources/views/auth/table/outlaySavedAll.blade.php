@@ -15,10 +15,10 @@
   <h3 class="card-header">Сметы</h3>
 
         @forelse($arrayNames as $oneNote)
-    <div class="container card mt-3">
+    <div class="container card mt-3" id="nameOneOutlay{{$oneNote->id}}">
       <div class="container mt-3 card-header">
         <div class="d-flex justify-content-between">
-          <div id="nameOneOutlay{{$oneNote->id}}">
+          <div>
             <p class="d-inline-flex h5">{{$loop->iteration}}. </p>
             <a class="h3 " href="{{route('outlayOne', $oneNote->id )}}">
               {{$oneNote->name}}
@@ -97,24 +97,26 @@
             </div>
           </div>
             @endif
+
         @endforeach
+
         @if ($discribe->ability_outlay === 1)
-        <div id="AddUsersModal{{$discribe->name_outlay_id}}" class="modal fade" role="dialog">
+        <div id="AddUsersModal{{$oneNote->id}}" class="modal fade" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Поиск</h4>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form action="{{ route('searchName') }}" method="POST" role="search">
+            <form action="{{ route('searchName') }}" method="POST" id="addUsers" role="search">
               {{ csrf_field() }}
                 <div class="modal-body">
-                    <input class="form-control mr-sm-2 searchName" type="text" autocomplete="off" placeholder="Имя или E-mail">
+                    <input class="form-control mr-sm-2 searchName" type="text" autocomplete="off" form="addUsers" placeholder="Имя или E-mail">
                     <ul class="result-search-names">
                     </ul>
                 </div>
               <div class="modal-footer">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Добавить</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" form="addUsers">Добавить</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
               </div>
             </form>
@@ -123,7 +125,7 @@
       </div>
 
         <div class="text-center pt-2">
-          <button id="add-new-user" type="button"  class="btn btn-primary rounded-0" data-toggle="modal" data-target="#AddUsersModal{{$discribe->name_outlay_id}}"> + Пользователь</button>
+          <button id="add-new-user" type="button"  class="btn btn-primary rounded-0" data-toggle="modal" data-target="#AddUsersModal{{$oneNote->id}}"> + Пользователь</button>
         </div>
         <div class="d-flex justify-content-end">
           <form method="post" id="outlayPowers{{$oneNote->id}}" action="{{route('outlayPowers', $oneNote->id)}}">
@@ -132,6 +134,7 @@
           </form>
         </div>
         @endif
+
         </div>
       </div>
     </div>
