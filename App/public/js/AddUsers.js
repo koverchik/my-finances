@@ -1,6 +1,7 @@
 $(document).ready(function () {
                   $('.searchName').on('keyup',function() {
                     let targetRespons = $(this).next('.result-search-names');
+                    $(this).parents('.modal-content').find('.btn-outline-success').prop('disabled',true);
                     let query = {
                             data: $(this).val()}
 
@@ -32,7 +33,7 @@ $(document).ready(function () {
                             let existingPowersUsers = $(nameOneOutlay).find('input').filter(function() {
                               return this.name.match(/(nameId)\d+/);
                             });
-                          
+
                             existingPowersUsers.each(function(index, value){
                               let elemId = "#elemId" + value['value'];
                               if($('.result-search-names').children(elemId).is(elemId)==true){
@@ -46,7 +47,15 @@ $(document).ready(function () {
 
             $('.result-search-names').on('click', 'ol', function(){
                   var value = $(this).text();
+                  $(this).parents('.modal-content').find('.btn-outline-success').prop('disabled',false);
                   $('.searchName').val(value);
                   $('.result-search-names').children().remove();
+
+              });
+              $('.close').click(function () {
+                $(this).parents(".modal-content").find('.searchName').val('')
+              });
+              $('.cancelSearch').click(function () {
+                $(this).parents(".modal-content").find('.searchName').val('')
 
               });

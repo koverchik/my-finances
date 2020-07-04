@@ -116,8 +116,8 @@
                     </ul>
                 </div>
               <div class="modal-footer">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" form="addUsers">Добавить</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" form="addUsers" disabled>Добавить</button>
+                <button type="button" class="btn btn-default cancelSearch" data-dismiss="modal">Отмена</button>
               </div>
             </form>
           </div>
