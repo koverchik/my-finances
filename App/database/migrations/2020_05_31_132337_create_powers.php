@@ -19,10 +19,10 @@ class CreatePowers extends Migration
             $table->foreign('name_outlay_id')->references('id')->on('name_outlay');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->boolean('delete_outlay');
-            $table->boolean('update_outlay');
-            $table->boolean('look_outlay');
-            $table->boolean('ability_outlay');
+            $table->boolean('delete_outlay')->default(0);
+            $table->boolean('update_outlay')->default(0);
+            $table->boolean('look_outlay')->default(1);
+            $table->boolean('ability_outlay')->default(0);
             $table->timestamps();
         });
     }

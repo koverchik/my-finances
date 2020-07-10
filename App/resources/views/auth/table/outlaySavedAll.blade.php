@@ -97,10 +97,13 @@
             </div>
           </div>
             @endif
-
         @endforeach
 
-        @if ($discribe->ability_outlay === 1)
+
+        @foreach($powerUser as $powersAbilityUser)
+          @if($powersAbilityUser->name_outlay_id == $oneNote->id)
+            @if($powersAbilityUser->ability_outlay === 1)
+
         <div id="AddUsersModal{{$oneNote->id}}" class="modal fade" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -108,15 +111,15 @@
               <h4 class="modal-title">Поиск</h4>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form action="{{ route('searchName') }}" method="POST" id="addUsers" role="search">
+            <form action="{{ route('saveNameUser', $oneNote->id )}}" method="POST" id="addUsers{{$oneNote->id}}" role="search">
               {{ csrf_field() }}
                 <div class="modal-body">
-                    <input class="form-control mr-sm-2 searchName" type="text" autocomplete="off" form="addUsers" placeholder="Имя или E-mail">
+                    <input class="form-control mr-sm-2 searchName" type="text" autocomplete="off" name="nameUserAndEmail" form="addUsers{{$oneNote->id}}" placeholder="Имя или E-mail">
                     <ul class="result-search-names">
                     </ul>
                 </div>
               <div class="modal-footer">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" form="addUsers" disabled>Добавить</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" form="addUsers{{$oneNote->id}}" disabled>Добавить</button>
                 <button type="button" class="btn btn-default cancelSearch" data-dismiss="modal">Отмена</button>
               </div>
             </form>
@@ -133,8 +136,9 @@
           <button id="button_Add" class="btn btn-outline-primary mt-2 mb-2 text-dark">Сохранить</button>
           </form>
         </div>
-        @endif
-
+            @endif
+          @endif
+        @endforeach
         </div>
       </div>
     </div>
@@ -165,6 +169,4 @@
     <button id="button_Add" class="btn btn-warning mt-2 mb-2"><a href="/outlay" class="text-danger alert-link">+ Создать новую</a></button>
   </div>
 </div>
-
-
 @endsection

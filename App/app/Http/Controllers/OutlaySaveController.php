@@ -48,7 +48,10 @@ class OutlaySaveController extends Controller
 
     public function allOutlay(Request $request)
     {
+    // Добавить переменную в которой будет записано значение доступа на изменение таблицы доступов, по этому значению будет осуществляться выведение кнопок "Сохранить", "+Пользователь"
       $users = DB::table('powers')->where('user_id', auth()->user()->id)->get('name_outlay_id');
+
+
 
       $arrayNames = $users->flatMap(function ($item) {
         $arrayName = DB::table('name_outlay')-> where('id', $item->name_outlay_id)->get();
@@ -58,7 +61,9 @@ class OutlaySaveController extends Controller
         $itemOutlay  = DB::table('powers')->where('name_outlay_id', $item->name_outlay_id)->join('users', 'powers.user_id', '=', 'users.id')->get();
         return $itemOutlay;
             });
-
+      $powerUser = $itemOutlay->filter(function ($item, $key) {
+                return $item->user_id == auth()->user()->id;
+            });
         $arrayLastData = $users->map(function ($item, $key) {
         $rowUpdate =  new RowOutlay();
         $lastUpdate = $rowUpdate->where('name_outlay_id', $item-> name_outlay_id)->get('updated_at')->max();
@@ -67,7 +72,7 @@ class OutlaySaveController extends Controller
         return $matches;
         });
 
-      return view('auth.table.outlaySavedAll', ['arrayLastData' => $arrayLastData, 'arrayNames' => $arrayNames, 'itemOutlay'=>$itemOutlay]);
+      return view('auth.table.outlaySavedAll', ['arrayLastData' => $arrayLastData, 'arrayNames' => $arrayNames, 'itemOutlay'=>$itemOutlay,'powerUser'=>$powerUser]);
     }
 
     public function outlayOne($id)
@@ -306,6 +311,23 @@ class OutlaySaveController extends Controller
           }
         return response()->json($data);
       }
-      dd($reg);
+
     }
+
+    public function saveNameUser(Request $request, $id){
+
+       $data = DB::table('powers')
+       ->where('user_id', '=', '$request->idUserInDB')
+       ->where('name_outlay_id', '=', $id)
+       ->get();
+        if($data->isEmpty()){
+          DB::table('powers')->insertOrIgnore(
+            ['name_outlay_id' => $id, 'user_id' => $request->idUserInDB]);
+        }
+
+        // $title = 'Пользователь  «'. $request->nameUserAndEmail .'» добавлен.';
+        // return response()->json(['responseJSON' => $title]);
+        // return redirect()-> route('outlays')->with('success', $title);
+      }
+
   }
