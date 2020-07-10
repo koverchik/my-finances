@@ -40,11 +40,19 @@ class AuthServiceProvider extends ServiceProvider
             return true;
           }else{
             return false;
-          
+
           }
         });
         Gate::define('updateOutlay', function ($user, $id) {
           $accessUser = collect(DB::table('powers')->where('name_outlay_id', $id)->where('user_id', $user->id)->pluck('update_outlay'));
+          if($accessUser[0] == 1){
+            return true;
+          }else{
+            return false;
+          }
+        });
+        Gate::define('abilityOutlay', function ($user, $id) {
+          $accessUser = collect(DB::table('powers')->where('name_outlay_id', $id)->where('user_id', $user->id)->pluck('ability_outlay'));
           if($accessUser[0] == 1){
             return true;
           }else{
