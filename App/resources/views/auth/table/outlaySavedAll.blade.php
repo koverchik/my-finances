@@ -2,6 +2,7 @@
 
 @push('scripts')
 <script src="{{ asset('js/AddUsers.js')}}" defer></script>
+<script src="{{ asset('js/deleteUserOutlay.js')}}" defer></script>
 @endpush
 
 @section('content')
@@ -35,11 +36,12 @@
       <div id="table" class="table table-sm caption">
         <div class="bg-info container pt-2 pb-2">
           <div class="row">
-            <div class="col-4">Пользователь</div>
+            <div class="col-2">Пользователь</div>
             <div class="col-2 text-center">Просмотр</div>
             <div class="col-2 text-center">Удаление</div>
             <div class="col-2 text-center">Редактирование</div>
             <div class="col-2 text-center">Управление</div>
+            <div class="col-2 text-center"></div>
           </div>
         </div>
         <div class="container">
@@ -50,9 +52,8 @@
            bg-light
            @endif
            ">
-            <div class="col-4 pt-2 pb-2">
+            <div class="col-2 pt-2 pb-2">
             {{$discribe->name}}
-
              <input type="hidden" form="outlayPowers{{$oneNote->id}}" name="nameId{{$discribe->user_id}}" value="{{$discribe->id}}">
             </div>
             <div class="text-center col-2 pt-2 pb-2 border-bottom border-info">
@@ -95,11 +96,36 @@
               @endif
               >
             </div>
+              @foreach($powerUser as $powersAbilityUser)
+                @if($powersAbilityUser->name_outlay_id == $oneNote->id)
+                @if($powersAbilityUser->ability_outlay === 1)
+            <div class="text-center text-danger col-2 pt-2 pb-2 border-0 btn rounded-0" type="button" data-toggle="modal" data-target="#deleteName{{$discribe->id_outlay}}">
+                &#9003;
+                <div id="deleteName{{$discribe->id_outlay}}" class="modal fade"  role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Удаление пользователя</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                        <div class="modal-body text-dark">
+                            Вы действительно хотите удалить пользователя «{{$discribe->name}}» из таблицы «{{$oneNote->name}}»?
+                        </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-outline-danger my-2 my-sm-0 deleteName" id="{{$discribe->id_outlay}}" type="submit">Удалить</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+                @endif
+                @endif
+                @endforeach
           </div>
             @endif
         @endforeach
-
-
         @foreach($powerUser as $powersAbilityUser)
           @if($powersAbilityUser->name_outlay_id == $oneNote->id)
             @if($powersAbilityUser->ability_outlay === 1)

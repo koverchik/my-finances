@@ -55,12 +55,17 @@ class OutlaySaveController extends Controller
         return $arrayName;
             });
       $itemOutlay = $users->flatMap(function ($item) {
-        $itemOutlay  = DB::table('powers')->where('name_outlay_id', $item->name_outlay_id)->join('users', 'powers.user_id', '=', 'users.id')->get();
+        $itemOutlay  = DB::table('powers')
+        ->where('name_outlay_id', $item->name_outlay_id)
+        ->join('users', 'powers.user_id', '=', 'users.id')
+        ->select('users.id', 'users.name', 'users.email','powers.id AS id_outlay', 'powers.user_id', 'powers.name_outlay_id','powers.delete_outlay','powers.update_outlay', 'powers.look_outlay', 'powers.ability_outlay' )
+        ->get();
         return $itemOutlay;
             });
       $powerUser = $itemOutlay->filter(function ($item, $key) {
                 return $item->user_id == auth()->user()->id;
             });
+
         $arrayLastData = $users->map(function ($item, $key) {
         $rowUpdate =  new RowOutlay();
         $lastUpdate = $rowUpdate->where('name_outlay_id', $item-> name_outlay_id)->get('updated_at')->max();
@@ -291,7 +296,6 @@ class OutlaySaveController extends Controller
 
         if($reg->ajax()){
         $query = $reg->get('data');
-
           if($query != ''){
            $data = DB::table('users')
              ->where('name', 'like', '%'.$query.'%')
@@ -311,6 +315,9 @@ class OutlaySaveController extends Controller
 
     }
 
+
+
+
     public function saveNameUser(Request $request, $id){
 
       if (Gate::allows('deleteOutlay', $id)){
@@ -329,6 +336,19 @@ class OutlaySaveController extends Controller
         }else{
         return view('auth.table.accessDeviedAbility');
       }
+    }
+
+    public function deleteName(Request $reg)
+    {
+
+        if($reg->ajax($reg)){
+
+
+          $name_outlay_id = DB::table('powers')->where('id',  $reg->data)->first('name_outlay_id');
+          $queryData = DB::table('name_outlay')->where('id', $name_outlay_id->name_outlay_id)->first('name');
+          $query = DB::table('powers')->where('id', $reg->data)->delete();
+          return response()->json($queryData);
+      } 
     }
 
   }

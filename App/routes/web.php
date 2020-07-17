@@ -40,3 +40,5 @@ Route::post('home/outlay/{id}/powers', 'OutlaySaveController@outlayPowers')->nam
 Route::get('home/outlay/all/searchName', 'OutlaySaveController@searchName')->name('searchName');
 //Сохранение пользователя
 Route::post('home/outlay/all/searchName/{id}', 'OutlaySaveController@saveNameUser')->name('saveNameUser');
+// Удаление пользователя
+Route::post('home/outlay/all/deleteName/', 'OutlaySaveController@deleteName');
