@@ -25,7 +25,13 @@
               {{$oneNote->name}}
             </a>
           </div>
+          @foreach($powerUser as $powersAbilityUser)
+            @if($powersAbilityUser->name_outlay_id == $oneNote->id)
+            @if($powersAbilityUser->delete_outlay === 1)
           <button type="button" class="btn btn-light p-0 pr-2 pl-2" data-toggle="modal" data-target="#deleteModal{{$loop->iteration}}">&#10008;</button>
+            @endif
+            @endif
+          @endforeach
         </div>
         <div class="d-flex">
             <p class="mr-3">Создана: {{date('d.m.Y в g:i', strtotime($oneNote->created_at))}}</p>
@@ -122,7 +128,7 @@
             </div>
                 @endif
                 @endif
-                @endforeach
+              @endforeach
           </div>
             @endif
         @endforeach

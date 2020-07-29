@@ -43,7 +43,7 @@ class OutlaySaveController extends Controller
         ['name_outlay_id' => $id_query, 'user_id' => $id, 'delete_outlay' => 1, 'update_outlay' => 1, 'look_outlay' => 1, 'ability_outlay' => 1]);
 
       $title = 'Смета с названием «'. $req->input('title').'» сохранена';
-      return redirect()-> route('home')->with('success', $title);
+      return redirect()->route('home')->with('success', $title);
     }
 
     public function allOutlay(Request $request)
@@ -289,6 +289,7 @@ class OutlaySaveController extends Controller
         $id_owner = $nameOutlay -> where('id', $id)->pluck('name');
 
         $title = 'Изменения полномочй в смете «'. $id_owner[0] .'» сохранены';
+
         return redirect()-> route('outlays')->with('success', $title);
       }
 
@@ -315,12 +316,9 @@ class OutlaySaveController extends Controller
 
     }
 
-
-
-
     public function saveNameUser(Request $request, $id){
 
-      if (Gate::allows('deleteOutlay', $id)){
+      if (Gate::allows('abilityOutlay', $id)){
         $data = DB::table('powers')
         ->where('user_id', '=', '$request->idUserInDB')
         ->where('name_outlay_id', '=', $id)
@@ -335,20 +333,19 @@ class OutlaySaveController extends Controller
           return redirect()-> route('outlays')->with('success', $title);
         }else{
         return view('auth.table.accessDeviedAbility');
-      }
+              }
     }
 
     public function deleteName(Request $reg)
     {
 
         if($reg->ajax($reg)){
-
-
           $name_outlay_id = DB::table('powers')->where('id',  $reg->data)->first('name_outlay_id');
           $queryData = DB::table('name_outlay')->where('id', $name_outlay_id->name_outlay_id)->first('name');
           $query = DB::table('powers')->where('id', $reg->data)->delete();
           return response()->json($queryData);
-      } 
-    }
 
-  }
+
+      }
+    }
+}

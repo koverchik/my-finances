@@ -60,7 +60,7 @@
           <th class="valueNamber">{{$loop->iteration}}</th>
           <th class="valueName">{{$one->name}}</th>
           <th class="valueCost">{{$one->amount}}</th>
-          <th class="trash h4 d-none">	&#128465;</th>
+          <th class="trash h4 d-none">&#128465;</th>
         </tr>
       </thead>
       @endforeach

@@ -42,3 +42,7 @@ Route::get('home/outlay/all/searchName', 'OutlaySaveController@searchName')->nam
 Route::post('home/outlay/all/searchName/{id}', 'OutlaySaveController@saveNameUser')->name('saveNameUser');
 // Удаление пользователя
 Route::post('home/outlay/all/deleteName/', 'OutlaySaveController@deleteName');
+//Кошелек  редактирование
+// Route::get('home/purse', 'PurseController@base');
+//Создание нового кошелька
+Route::post('home/purse', 'PurseController@newPurse')->name('newPurse');
