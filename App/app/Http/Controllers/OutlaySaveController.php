@@ -343,6 +343,7 @@ class OutlaySaveController extends Controller
           $name_outlay_id = DB::table('powers')->where('id',  $reg->data)->first('name_outlay_id');
           $queryData = DB::table('name_outlay')->where('id', $name_outlay_id->name_outlay_id)->first('name');
           $query = DB::table('powers')->where('id', $reg->data)->delete();
+          
           return response()->json($queryData);
 
 

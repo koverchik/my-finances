@@ -68,7 +68,6 @@ $("#table").on('change','.valueCost', function() {
       sum += parseFloat($(this).val());
       return sum;
     });
-
     $( "#summ-all").text(sum.toFixed(2));
   }
 
