@@ -47,7 +47,7 @@
                 </select>
               </th>
               <th colspan="2"><input type="text" data-toggle="tooltip" data-placement="bottom" id="cost" class="form-control" title="Введите цифровое значение"/></th>
-            
+
             </tr>
           </thead>
 

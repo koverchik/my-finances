@@ -67,7 +67,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                              <button class="btn btn-success" type="submit"  form="newPurse"  type="button">Создать </button>
+                              <button class="btn btn-success" type="submit"  form="newPurse" type="button">Создать </button>
                             </div>
                             </form>
                           </div>

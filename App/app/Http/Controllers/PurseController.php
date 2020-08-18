@@ -21,22 +21,36 @@ class PurseController extends Controller
       $name = $request->createNamePurse;
       $user_id = auth()->user()->id;
       $user_name = auth()->user()->name;
+      $ldate = date('Y-m-d H:i:s');
       $id = DB::table('name_purse')->insertGetId(
-            ['name' => $name, 'user_id' => $user_id]
+            ['name' => $name, 'user_id' => $user_id, 'created_at' => $ldate]
         );
-      return view('auth.purse.main')->with(['name' =>  $name, 'idPurse' =>  $id, 'userId' => $user_id, 'nameUser' => $user_name] );
+
+      return redirect()->route('PurseView',$id);
     }
+
+    public function viewOnePurse($id)
+    {
+
+      $user_id = auth()->user()->id;
+      $user_name = auth()->user()->name;
+      $name = DB::table('name_purse')->where('id', '=', $id)->pluck('name');
+      return view('auth.purse.main', ['name' =>  $name[0], 'idPurse' =>  $id,'userId' => $user_id, 'nameUser' => $user_name]);
+
+    }
+
 
     public function newRowsPurse(Request $request)
     {
-
+      $ldate = date('Y-m-d H:i:s');
       if($request->ajax()){
         $id = DB::table('rows_purse')->insertGetId([
           'name'=> $request ->get('name'),
           'amount' => $request ->get('amount'),
           'created_at_time'=> $request ->get('createdTime'),
           'name_purse_id' => $request ->get('namePurseId'),
-          'user_id' => $request ->get('userId')
+          'user_id' => $request ->get('userId'),
+          'created_at' => $ldate
         ]);
 
         return response()->json(['msg'=> $id]);

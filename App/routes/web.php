@@ -43,8 +43,10 @@ Route::post('home/outlay/all/searchName/{id}', 'OutlaySaveController@saveNameUse
 // Удаление пользователя
 Route::post('home/outlay/all/deleteName/', 'OutlaySaveController@deleteName');
 //Создание нового кошелька
-Route::post('home/purse', 'PurseController@newPurse')->name('newPurse');
+Route::post('home/purse/', 'PurseController@newPurse')->name('newPurse');
+//Отображение кошелька
+Route::get('home/purse/{id}', 'PurseController@viewOnePurse')->name('PurseView');
 //Кошелек  добавление
  Route::post('home/purse/add', 'PurseController@newRowsPurse');
  //удаление строки
-  Route::post('home/purse/deleterow', 'PurseController@DeleteOneRow');
+Route::post('home/purse/deleterow', 'PurseController@DeleteOneRow');

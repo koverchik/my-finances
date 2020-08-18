@@ -88,7 +88,7 @@ function queryAjax() {
     }
   })
   $.ajax({
-    url: "purse/add",
+    url: "add",
     method: "POST",
     dataType: "JSON",
     data: query,
@@ -149,7 +149,6 @@ function deleteOneRow(event) {
       error: function (){
           $("#trash"+data['msg']).tooltip("show");
       }
-
     })
 }
 
