@@ -2,7 +2,6 @@ let now = new Date();
 let nowMonth = now.getMonth();
 let nowDate = now.getDate();
 
-
 if(nowMonth < 10){
   nowMonth = "0" + nowMonth;
 }
@@ -138,6 +137,10 @@ function deleteOneRow(event) {
       context: targetRespons,
       success: function (data){
       $("#nameRowPurse"+data['msg']).remove();
+      $(".namberRow").each(function (index) {
+        let numberRow  = index + 1;
+        $(this).text(numberRow);
+      });
 
       let summCost = 0;
       $(".valueCost").each(function(elem){
