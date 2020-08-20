@@ -20,7 +20,6 @@ class PurseController extends Controller
 
       $name = $request->createNamePurse;
       $user_id = auth()->user()->id;
-      $user_name = auth()->user()->name;
       $ldate = date('Y-m-d H:i:s');
       $id = DB::table('name_purse')->insertGetId(
             ['name' => $name, 'user_id' => $user_id, 'created_at' => $ldate]
@@ -35,6 +34,7 @@ class PurseController extends Controller
       $user_id = auth()->user()->id;
       $user_name = auth()->user()->name;
       $name = DB::table('name_purse')->where('id', '=', $id)->pluck('name');
+      
       return view('auth.purse.main', ['name' =>  $name[0], 'idPurse' =>  $id,'userId' => $user_id, 'nameUser' => $user_name]);
 
     }

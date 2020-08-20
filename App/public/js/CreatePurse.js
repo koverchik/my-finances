@@ -123,7 +123,7 @@ function queryAjax() {
 }
 
 function deleteOneRow(event) {
-
+  let targetRespons = this.elementId;
   let deleteNamberRow = {name: this.elementId}
   $.ajaxSetup({
     headers: {
@@ -131,10 +131,11 @@ function deleteOneRow(event) {
     }
   })
     $.ajax({
-      url: "purse/deleterow",
+      url: "deleterow",
       method: "POST",
       dataType: "JSON",
       data: deleteNamberRow,
+      context: targetRespons,
       success: function (data){
       $("#nameRowPurse"+data['msg']).remove();
 
@@ -147,7 +148,7 @@ function deleteOneRow(event) {
       $("#countValue").text(summCost);
       },
       error: function (){
-          $("#trash"+data['msg']).tooltip("show");
+          $("#trash"+ targetRespons).tooltip("show");
       }
     })
 }

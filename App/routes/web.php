@@ -48,5 +48,5 @@ Route::post('home/purse/', 'PurseController@newPurse')->name('newPurse');
 Route::get('home/purse/{id}', 'PurseController@viewOnePurse')->name('PurseView');
 //Кошелек  добавление
  Route::post('home/purse/add', 'PurseController@newRowsPurse');
- //удаление строки
+//удаление строки
 Route::post('home/purse/deleterow', 'PurseController@DeleteOneRow');
