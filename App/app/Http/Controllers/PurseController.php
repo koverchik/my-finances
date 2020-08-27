@@ -28,16 +28,6 @@ class PurseController extends Controller
       return redirect()->route('PurseView',$id);
     }
 
-    public function viewOnePurse($id)
-    {
-
-      $user_id = auth()->user()->id;
-      $user_name = auth()->user()->name;
-      $name = DB::table('name_purse')->where('id', '=', $id)->pluck('name');
-      
-      return view('auth.purse.main', ['name' =>  $name[0], 'idPurse' =>  $id,'userId' => $user_id, 'nameUser' => $user_name]);
-
-    }
 
 
     public function newRowsPurse(Request $request)
@@ -65,4 +55,21 @@ class PurseController extends Controller
       }
 
     }
+    
+    public function viewOnePurse($id)
+    {
+
+      $user_id = auth()->user()->id;
+      $user_name = auth()->user()->name;
+      $name = DB::table('name_purse')->where('id', '=', $id)->pluck('name');
+
+      return view('auth.purse.main', ['name' =>  $name[0], 'idPurse' =>  $id,'userId' => $user_id, 'nameUser' => $user_name]);
+
+    }
+
+    public function allPurse()
+    {
+          return view('auth.purse.allPurse');
+    }
+
 }

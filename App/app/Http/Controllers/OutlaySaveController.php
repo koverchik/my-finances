@@ -74,7 +74,7 @@ class OutlaySaveController extends Controller
         return $matches;
         });
 
-      return ('auth.table.outlaySavedAll', ['arrayLastData' => $arrayLastData, 'arrayNames' => $arrayNames, 'itemOutlay'=>$itemOutlay,'powerUser'=>$powerUser]);
+      return view('auth.table.outlaySavedAll', ['arrayLastData' => $arrayLastData, 'arrayNames' => $arrayNames, 'itemOutlay'=>$itemOutlay,'powerUser'=>$powerUser]);
     }
 
     public function outlayOne($id)

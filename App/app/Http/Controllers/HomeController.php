@@ -26,15 +26,21 @@ class HomeController extends Controller
     public function index(Request $req)
     {
         $tables = collect(DB::table('powers')->where('user_id', auth()->user()->id)->get('name_outlay_id'));
-        
+        $permissionPurse = collect(DB::table('permission')->where('user_id', auth()->user()->id)->get('name_purse_id'));
+
+
+        $namesPurse = $permissionPurse->flatMap(function ($values){
+          $values = collect(DB::table('name_purse')->where('id', $values->name_purse_id)->get());
+          return $values;
+        });
+
         $namesOutlay = $tables->flatMap(function ($values) {
           $values = collect(DB::table('name_outlay')->where('id', $values->name_outlay_id)->get());
           return $values;
         });
-
         $id_user = $req->user();
         $id = $id_user['id'];
-          return view('home',  ['data' => $namesOutlay, $id => $id]);
+          return view('home',  ['data' => $namesOutlay, 'dataPurse' => $namesPurse, $id => $id]);
     }
 
 }

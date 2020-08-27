@@ -30,13 +30,18 @@
                       @foreach ($data as $el)
                         <li class="list-group-item"><a href="{{route('outlayOne', $el->id)}}">{{$el->name}}</a></li>
                       @endforeach
-                    </ul>
+                      </ul>
                       <div class="row justify-content-center">
                         <button type="button" class="btn btn-warning"><a target="_blank" class="text-danger alert-link text-decoration-none" href="/outlay">+ Добавить</a></button>
                       </div>
                     </div>
                     <div class="col-6">
-                      <a href="#" class="row justify-content-center h3">Расходы</a>
+                      <a href="{{route('allPurse')}}" class="row justify-content-center h3">Расходы</a>
+                      <ul class="list-group pt-3 pb-3">
+                        @foreach ($dataPurse as $purse)
+                          <li class="list-group-item"><a href="{{route('PurseView', $purse->id)}}">{{$purse->name}}</a></li>
+                        @endforeach
+                      </ul>
                       <div class="row justify-content-center">
                         <button type="button" class="btn btn-warning text-danger alert-link text-decoration-none" data-toggle="modal" data-target="#createPuse">+ Добавить</button>
                       </div>
