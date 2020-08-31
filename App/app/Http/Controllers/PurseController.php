@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateNewPurseRequest;
 use App\NamePurse;
 use App\Permission;
+use App\RowPurse;
 
 
 class PurseController extends Controller
@@ -44,22 +45,21 @@ class PurseController extends Controller
 
     public function newRowsPurse(Request $request)
     {
-      $ldate = date('Y-m-d H:i:s');
+
       if($request->ajax()){
-
-
-        $id = DB::table('rows_purse')->insertGetId([
-          'name'=> $request ->get('name'),
-          'amount' => $request ->get('amount'),
-          'created_at_time'=> $request ->get('createdTime'),
-          'name_purse_id' => $request ->get('namePurseId'),
-          'user_id' => $request ->get('userId'),
-          'created_at' => $ldate
-        ]);
+          $rowPurse = new RowPurse;
+          $rowPurse-> name = $request ->get('name');
+          $rowPurse -> amount = $request ->get('amount');
+          $rowPurse -> created_at_time = $request ->get('createdTime');
+          $rowPurse -> name_purse_id = $request ->get('namePurseId');
+          $rowPurse -> user_id = $request ->get('userId');
+          $rowPurse ->save();
+          $id = $rowPurse->id;
 
         return response()->json(['msg'=> $id]);
       }
     }
+    
     public function DeleteOneRow(Request $request)
     {
       if($request->ajax()){
