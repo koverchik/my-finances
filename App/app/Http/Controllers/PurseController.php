@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateNewPurseRequest;
+use App\NamePurse;
+use App\Permission;
 
 
 class PurseController extends Controller
@@ -20,10 +22,20 @@ class PurseController extends Controller
 
       $name = $request->createNamePurse;
       $user_id = auth()->user()->id;
-      $ldate = date('Y-m-d H:i:s');
-      $id = DB::table('name_purse')->insertGetId(
-            ['name' => $name, 'user_id' => $user_id, 'created_at' => $ldate]
-        );
+      $namePurse = new NamePurse;
+      $namePurse -> name = $name;
+      $namePurse -> user_id = $user_id;
+      $namePurse->save();
+      $id = $namePurse->id;
+
+      $creatorPermission = new Permission;
+      $creatorPermission -> name_purse_id = $id;
+      $creatorPermission -> user_id = $user_id;
+      $creatorPermission-> delete_purse = '1';
+      $creatorPermission-> update_purse = '1';
+      $creatorPermission-> look_purse = '1';
+      $creatorPermission-> ability_purse= '1';
+      $creatorPermission ->save();
 
       return redirect()->route('PurseView',$id);
     }
@@ -34,6 +46,8 @@ class PurseController extends Controller
     {
       $ldate = date('Y-m-d H:i:s');
       if($request->ajax()){
+
+
         $id = DB::table('rows_purse')->insertGetId([
           'name'=> $request ->get('name'),
           'amount' => $request ->get('amount'),
@@ -55,7 +69,7 @@ class PurseController extends Controller
       }
 
     }
-    
+
     public function viewOnePurse($id)
     {
 
@@ -69,6 +83,12 @@ class PurseController extends Controller
 
     public function allPurse()
     {
+        $users = DB::table('permission')->where('user_id', auth()->user()->id)->get('name_purse_id');
+
+        $arrayNames = $users->flatMap(function ($item) {
+          $arrayName = DB::table('name_purse')-> where('id', $item->name_purse_id)->get();
+          return $arrayName;
+              });
           return view('auth.purse.allPurse');
     }
 

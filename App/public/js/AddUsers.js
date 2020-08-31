@@ -18,9 +18,12 @@ $(document).ready(function () {
                       $.ajax({
                         dataType: "json",
                         method: "get",
-                        url: "all/searchName",
+                        url: "http://127.0.0.1:8001/home/all/searchName",
                         context: targetRespons,
                         data: query,
+                        error: function (err){
+                          console.log(err);
+                        },
                         success: function (data) {
                             if($(this).children().length > 0){
                               $(this).html("");

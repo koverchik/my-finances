@@ -37,7 +37,7 @@ Route::get('home/outlay/{id}/delete', 'OutlaySaveController@outlayDelete')->name
 //Обнавление полномочий
 Route::post('home/outlay/{id}/powers', 'OutlaySaveController@outlayPowers')->name('outlayPowers');
 //Поиск пользователя
-Route::get('home/outlay/all/searchName', 'OutlaySaveController@searchName')->name('searchName');
+Route::get('home/all/searchName', 'OutlaySaveController@searchName')->name('searchName');
 //Сохранение пользователя
 Route::post('home/outlay/all/searchName/{id}', 'OutlaySaveController@saveNameUser')->name('saveNameUser');
 // Удаление пользователя
