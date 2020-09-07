@@ -32,14 +32,13 @@ $(document).ready(function () {
                           for (let key in data){
                             $(this).append("<ol id='elemId"+data[key]['id']+"'>"+ data[key]['name'] + " | " + data[key]['email']+"</ol>");
 
-                            $(this).css({position:'absolute', background:'white', overflow:'auto', width:'93%', "max-height":'140%', "padding-left": '0'});
+                            $(this).css({position:'absolute', background:'white', overflow:'auto', width:'93%', "max-height":'140%', "padding-left": '0', "z-index": '99'});
                             $(this).children().css('padding-top', '10px');
                             $(this).children().addClass('dropdown-item border border-top-0');
                               }
                             let idOutlay = $(this).parents(".modal").attr("id").substr(13);
-                            let nameOneOutlay = "#nameOneOutlay"+idOutlay;
-
-                            let existingPowersUsers = $(nameOneOutlay).find('input').filter(function() {
+                              let nameOneOutlay = "#nameOneOutlay"+idOutlay;
+                              let existingPowersUsers = $(nameOneOutlay).find('input').filter(function() {
                               return this.name.match(/(nameId)\d+/);
                             });
 
@@ -59,7 +58,7 @@ $(document).ready(function () {
                   $(this).parents('.modal-content').find('.btn-outline-success').prop('disabled',false);
                   let idUser =  $(this).attr("id").slice(6);
                   $(this).parents('.modal-content').find('.modal-body').append("<input type='hidden' name='idUserInDB' id='idUserInDB' form='"+$(this).parents('.modal-body').find('.searchName').attr('form')+"' value='"+ idUser +"'/>")
-                  console.log();
+
                   $('.searchName').val(value);
                   $('.result-search-names').children().remove();
 

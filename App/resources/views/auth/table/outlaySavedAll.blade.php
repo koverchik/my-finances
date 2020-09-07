@@ -165,7 +165,7 @@
         <div class="d-flex justify-content-end">
           <form method="post" id="outlayPowers{{$oneNote->id}}" action="{{route('outlayPowers', $oneNote->id)}}">
             @csrf
-          <button id="button_Add" class="btn btn-outline-primary mt-2 mb-2 text-dark">Сохранить</button>
+          <button id="button_Add{{$oneNote->id}}" class="btn btn-outline-primary mt-2 mb-2 text-dark">Сохранить</button>
           </form>
         </div>
             @endif
@@ -198,7 +198,7 @@
         <p class="alert alert-danger">Здесь пока ничего нет. Попробуйте <a href="/outlay" class="alert-link">создать</a></p>
         @endforelse
   <div class="d-flex justify-content-center">
-    <button id="button_Add" class="btn btn-warning mt-2 mb-2"><a href="/outlay" class="text-danger alert-link">+ Создать новую</a></button>
+    <button id="buttonCreate" class="btn btn-warning mt-2 mb-2"><a href="/outlay" class="text-danger alert-link">+ Создать новую</a></button>
   </div>
 </div>
 @endsection

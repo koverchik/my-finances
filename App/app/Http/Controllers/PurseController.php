@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateNewPurseRequest;
+use App\User;
 use App\NamePurse;
 use App\Permission;
 use App\RowPurse;
@@ -59,7 +60,7 @@ class PurseController extends Controller
         return response()->json(['msg'=> $id]);
       }
     }
-    
+
     public function DeleteOneRow(Request $request)
     {
       if($request->ajax()){
@@ -83,13 +84,41 @@ class PurseController extends Controller
 
     public function allPurse()
     {
-        $users = DB::table('permission')->where('user_id', auth()->user()->id)->get('name_purse_id');
+        $users = collect(DB::table('permission')->where('user_id', auth()->user()->id)->get('name_purse_id'));
 
-        $arrayNames = $users->flatMap(function ($item) {
-          $arrayName = DB::table('name_purse')-> where('id', $item->name_purse_id)->get();
-          return $arrayName;
+        $arrayNames = $users->map(function ($values) {
+          $NamePurse = NamePurse::find($values->name_purse_id);
+          $name = $NamePurse->toArray();
+          $permission = $NamePurse->Permission;
+          $permission = $permission->map(function ($values){
+            $user = (User::find($values->user_id, ['name', 'email']))->toArray();
+            $values = $values->toArray();
+            $marge = array_merge($values, $user);
+            return array_merge($values, $user);
+          });
+          $permission = $permission->toArray();
+          $arrayPermission = ['permission' => $permission];
+          return array_merge($name,$arrayPermission);
               });
-          return view('auth.purse.allPurse');
+
+          return view('auth.purse.allPurse', )->with('dataPurses', $arrayNames);
+    }
+
+    public function PurseNewUser(Request $request)
+    {
+
+      $NamePurse = NamePurse::find($request->namePurse);
+      $NameUser =  User::find($request->idUserInDB);
+      $creatorPermission = new Permission;
+      $creatorPermission -> name_purse_id = $request->namePurse;
+      $creatorPermission -> user_id = $request->idUserInDB;
+      $creatorPermission-> delete_purse = '0';
+      $creatorPermission-> update_purse = '0';
+      $creatorPermission-> look_purse = '1';
+      $creatorPermission-> ability_purse= '0';
+      $creatorPermission ->save();
+      $text = "Пользователь ".$NameUser->name." был успешно добавлен в таблицу «". $NamePurse->name. "»";
+      return back()->with('success', $text);
     }
 
 }
