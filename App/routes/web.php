@@ -54,3 +54,5 @@ Route::post('home/purse/add', 'PurseController@newRowsPurse');
 Route::post('home/purse/deleterow', 'PurseController@DeleteOneRow');
 //Добавление пользователя к кошельку
 Route::post('home/purse/newuser', 'PurseController@PurseNewUser')->name('PurseNewUser');
+//Удаление кошельками
+Route::post('home/purse/delete', 'PurseController@PurseDelete')->name('PurseDelete');

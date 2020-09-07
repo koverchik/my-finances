@@ -121,4 +121,16 @@ class PurseController extends Controller
       return back()->with('success', $text);
     }
 
+    public function PurseDelete(Request $request)
+    {
+
+      $NameforRespons = NamePurse::find($request->idPurse);
+      $name = $NameforRespons->name;
+      
+      DB::table('name_purse')->where('id', '=', $request->idPurse)->delete();
+      $text = "Таблица «".$name. "» была успешно удалена";
+
+      return back()->with('success', $text);
+    }
+
 }

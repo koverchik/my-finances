@@ -15,10 +15,10 @@ class PermissionPurse extends Migration
     {
         Schema::create('permission', function (Blueprint $table) {
           $table->id();
-          $table->bigInteger('name_purse_id')->unsigned()->index();
-          $table->foreign('name_purse_id')->references('id')->on('name_purse');
+          $table->bigInteger('name_purse_id')->unsigned();
+          $table->foreign('name_purse_id')->references('id')->on('name_purse')->onDelete('cascade');
           $table->bigInteger('user_id')->unsigned();
-          $table->foreign('user_id')->references('id')->on('users');
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
           $table->boolean('delete_purse')->default(0);
           $table->boolean('update_purse')->default(0);
           $table->boolean('look_purse')->default(1);

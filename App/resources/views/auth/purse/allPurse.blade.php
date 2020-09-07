@@ -143,7 +143,7 @@
         </div>
       </div>
     </div>
-@endforeach
+
     <div class="modal fade" id="deleteModal{{$onePurse['id']}}"  role="dialog" aria-labelledby="deleteModalLabel{{$onePurse['id']}}" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -154,16 +154,20 @@
             </button>
           </div>
           <div class="modal-body">
-            Вы действительно удалить таблицу?
+            Вы действительно удалить кошелек «{{$onePurse['name']}}»?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger"><a class="text-warning text-decoration-none alert-link" href="/home/outlay/delete">Удалить</a></button>
+            <form action="{{ route('PurseDelete')}}" method="POST" id="deletePurse{{$onePurse['id']}}">
+                <input type="hidden"  name="idPurse" form="deletePurse{{$onePurse['id']}}" value="{{$onePurse['id']}}">
+              {{ csrf_field() }}
+            <button type="submit" class="btn btn-danger text-warning text-decoration-none alert-link" type="submit" form="deletePurse{{$onePurse['id']}}">Удалить</button>
             <button type="button" class="btn btn-secondary alert-link" data-dismiss="modal">Отмена</button>
+          </form>
           </div>
         </div>
       </div>
     </div>
-
+@endforeach
   <div class="d-flex justify-content-center">
     <button id="button_Add" class="btn btn-warning mt-2 mb-2"><a href="/outlay" class="text-danger alert-link">+ Создать</a></button>
   </div>
