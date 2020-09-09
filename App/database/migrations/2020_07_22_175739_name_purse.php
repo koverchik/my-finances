@@ -17,7 +17,7 @@ class NamePurse extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -29,6 +29,8 @@ class NamePurse extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('permission');
+        Schema::dropIfExists('rows_purse');
         Schema::dropIfExists('name_purse');
     }
 }

@@ -19,10 +19,8 @@ class RowsPurse extends Migration
             $table->string('name', 100);
             $table->float('amount', 8, 2);
             $table->dateTime('created_at_time', 0);
-            $table->bigInteger('name_purse_id')->unsigned();
-            $table->foreign('name_purse_id')->references('id')->on('name_purse');
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('name_purse_id')->constrained('name_purse')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
