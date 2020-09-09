@@ -132,4 +132,16 @@ class PurseController extends Controller
       return back()->with('success', $text);
     }
 
+    public function UserPurseDelete(Request $request)
+    {
+      if($request->ajax()){
+        $userId = $request ->get('idUser');
+        $purseId = $request ->get('idPurse');
+        $NameUser =  User::find($userId);
+        DB::table('permission')->where('user_id', '=', $userId)->where('name_purse_id', '=', $purseId)->delete();
+
+        return response()->json(['name'=> $NameUser->name, 'userId'=> $userId, 'purseId' => $purseId]);
+      }
+    }
+
 }

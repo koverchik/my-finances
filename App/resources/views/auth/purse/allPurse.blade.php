@@ -3,6 +3,7 @@
 @section('content')
 @push('scripts')
 <script src="{{ asset('js/AddUsers.js')}}" defer></script>
+<script src="{{ asset('js/deleteUserPurse.js')}}" defer></script>
 @endpush
 
 @section('content')
@@ -82,9 +83,9 @@
               @endif
               >
             </div>
-              <div class="text-center text-danger col-2 pt-2 pb-2 border-0 btn rounded-0" type="button" data-toggle="modal" data-target="#deleteName{{$discribe['user_id']}}">
+              <div class="text-center text-danger col-2 pt-2 pb-2 border-0 btn rounded-0" type="button" data-toggle="modal" data-target="#deleteName{{$discribe['user_id']}}{{$discribe['name_purse_id']}}">
                 &#9003;
-                <div id="deleteName{{$discribe['user_id']}}" class="modal fade"  role="dialog">
+                <div id="deleteName{{$discribe['user_id']}}{{$discribe['name_purse_id']}}" class="modal fade"  role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -95,7 +96,9 @@
                             Вы действительно хотите удалить пользователя «{{$discribe['name']}}» из таблицы «{{$onePurse['name']}}»?
                         </div>
                       <div class="modal-footer">
-                        <button class="btn btn-outline-danger my-2 my-sm-0 deleteName" id="" type="submit">Удалить</button>
+                        <button class="btn btn-outline-danger my-2 my-sm-0 deleteName" type="submit">Удалить</button>
+                        <input type="hidden"  name="idPurse" value="{{$discribe['name_purse_id']}}">
+                        <input type="hidden"  name="idUser" value="{{$discribe['user_id']}}">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
                       </div>
                   </div>
