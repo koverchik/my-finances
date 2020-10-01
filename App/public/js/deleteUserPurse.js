@@ -15,11 +15,11 @@ $(document).ready(function () {
        $.ajax({
            dataType: "json",
            method: "post",
-           url: "http://127.0.0.1:8001/home/purse/userDelete",
+           url: "http://127.0.0.1:8000/home/purse/userDelete",
            context: targetRespons,
            data: query,
            success: function (data) {
-              
+
               let targetId = targetRespons.attr("id");
               $(targetRespons).on('hidden.bs.modal', function() {
               $('div[data-target ="#'+ targetId +'"]').parent().replaceWith("<div class='row'><div class='text-center col-12 pt-2 pb-2'> Пользователь из таблицы «"+ data['name'] + "» удален</div></div>");

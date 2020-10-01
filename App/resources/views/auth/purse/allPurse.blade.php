@@ -53,7 +53,7 @@
           <div class="row">
             <div class="col-2 pt-2 pb-2">
               {{$discribe['name']}}
-              <input type="hidden"  name="nameId{{$discribe['user_id']}}" form="outlayPowers{{$discribe['user_id']}}" value="{{$discribe['user_id']}}">
+              <input type="hidden"  name="nameId{{$discribe['user_id']}}" form="outlayPowers{{$discribe['name_purse_id']}}" value="{{$discribe['user_id']}}">
             </div>
             <div class="text-center col-2 pt-2 pb-2 border-bottom border-info">
               <input type="checkbox" name="view{{$discribe['user_id']}}" form="outlayPowers{{$discribe['name_purse_id']}}"  value="1"
@@ -137,7 +137,7 @@
           <button id="add-new-user" type="button"  class="btn btn-primary rounded-0" data-toggle="modal" data-target="#AddUsersModal{{$onePurse['id']}}"> + Пользователь</button>
         </div>
         <div class="d-flex justify-content-end">
-          <form method="post" id="outlayPowers{{$onePurse['id']}}" action="#">
+          <form method="post" id="outlayPowers{{$onePurse['id']}}" action="{{route('ChangePermission', $onePurse['id']) }}">
             @csrf
           <button id="button_Add{{$onePurse['id']}}" class="btn btn-outline-primary mt-2 mb-2 text-dark">Сохранить</button>
           </form>

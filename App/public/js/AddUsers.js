@@ -18,7 +18,7 @@ $(document).ready(function () {
                       $.ajax({
                         dataType: "json",
                         method: "get",
-                        url: "http://127.0.0.1:8001/home/all/searchName",
+                        url: "http://127.0.0.1:8000/home/all/searchName",
                         context: targetRespons,
                         data: query,
                         error: function (err){

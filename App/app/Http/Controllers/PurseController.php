@@ -144,4 +144,65 @@ class PurseController extends Controller
       }
     }
 
+    public function PermissionPurse(Request $request,  $id)
+    {
+      $collectionAll = collect($request->request);
+      //Получение ID
+      $collectionId = $collectionAll->filter(function ($item, $key) {
+                  return preg_match('/(nameId)([0-9])/', $key, $matches);
+      });
+      //Получение массива с полями
+      $allFildId = $collectionId->map(function ($item, $key){
+        $nameId = 'nameId'. $item;
+        $delete = 'delete'. $item;
+        $update = 'update'. $item;
+        $ability = 'ability'. $item;
+        $view = 'view'. $item;
+        $arrayOnePermission = collect([ $key => $item, $delete=>0, $update => 0, $ability => 0, $view => 0]);
+        return $arrayOnePermission;
+        });
+        $allFildId = $allFildId->collapse();
+        $diffFild = $allFildId->diffKeys($collectionAll);
+        $AllFild = $collectionAll->merge($diffFild);
+        $ArrayAllFiled = $AllFild->toArray();
+
+        foreach ($ArrayAllFiled as $key => $value) {
+          $viewItem = "/(view)([0-9])/";
+          $updateItem = "/(update)([0-9])/";
+          $deleteItem = "/(delete)([0-9])/";
+          $abilityItem = "/(ability)([0-9])/";
+      if(preg_match($viewItem, $key, $matches)){
+        DB::table('permission')
+                      ->where('name_purse_id', $id)
+                      ->where('user_id',  $matches[2])
+                      ->update(['look_purse' => $value]);
+             }
+       if(preg_match($updateItem, $key, $matches)){
+         DB::table('permission')
+                       ->where('name_purse_id', $id)
+                       ->where('user_id',  $matches[2])
+                       ->update(['update_purse' => $value]);
+              }
+        if(preg_match($deleteItem, $key, $matches)){
+          DB::table('permission')
+                        ->where('name_purse_id', $id)
+                        ->where('user_id',  $matches[2])
+                        ->update(['delete_purse' => $value]);
+               }
+       if(preg_match($abilityItem, $key, $matches)){
+         DB::table('permission')
+                       ->where('name_purse_id', $id)
+                       ->where('user_id',  $matches[2])
+                       ->update(['ability_purse' => $value]);
+              }
+         }
+
+       $nameOutlay =  new NamePurse();
+       $id_owner = $nameOutlay -> where('id', $id)->pluck('name');
+
+       $title = 'Изменения «'. $id_owner[0] .'» сохранены';
+
+      return back()->with('success', $title);
+    }
+
 }

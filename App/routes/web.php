@@ -58,3 +58,5 @@ Route::post('home/purse/newuser', 'PurseController@PurseNewUser')->name('PurseNe
 Route::post('home/purse/delete', 'PurseController@PurseDelete')->name('PurseDelete');
 //Удаление кошелька
 Route::post('home/purse/userDelete', 'PurseController@UserPurseDelete');
+//Управление полномочиями кошелька
+Route::post('home/purse/permission/{id}', 'PurseController@PermissionPurse')->name('ChangePermission');
