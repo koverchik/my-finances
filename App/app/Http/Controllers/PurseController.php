@@ -200,7 +200,7 @@ class PurseController extends Controller
        $nameOutlay =  new NamePurse();
        $id_owner = $nameOutlay -> where('id', $id)->pluck('name');
 
-       $title = 'Изменения «'. $id_owner[0] .'» сохранены';
+       $title = 'Изменения в кошелке «'. $id_owner[0] .'» сохранены';
 
       return back()->with('success', $title);
     }
