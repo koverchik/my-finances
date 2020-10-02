@@ -85,7 +85,7 @@ class PurseController extends Controller
     public function allPurse()
     {
         $users = collect(DB::table('permission')->where('user_id', auth()->user()->id)->get('name_purse_id'));
-
+        $client = auth()->user()->id;
         $arrayNames = $users->map(function ($values) {
           $NamePurse = NamePurse::find($values->name_purse_id);
           $name = $NamePurse->toArray();
@@ -100,8 +100,8 @@ class PurseController extends Controller
           $arrayPermission = ['permission' => $permission];
           return array_merge($name,$arrayPermission);
               });
-
-          return view('auth.purse.allPurse', )->with('dataPurses', $arrayNames);
+          
+          return view('auth.purse.allPurse')->with(['dataPurses' => $arrayNames, 'userAllListPurse' => $client]);
     }
 
     public function PurseNewUser(Request $request)

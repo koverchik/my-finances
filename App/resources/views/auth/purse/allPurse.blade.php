@@ -27,8 +27,13 @@
               {{$onePurse['name']}}
             </a>
           </div>
-
-          <button type="button" class="btn btn-light p-0 pr-2 pl-2" data-toggle="modal" data-target="#deleteModal{{$onePurse['id']}}">&#10008;</button>
+            @foreach($onePurse['permission'] as $one)
+                @if($one['user_id'] == $userAllListPurse)
+                  @if($one['delete_purse'] == 1)
+                <button type="button" class="btn btn-light p-0 pr-2 pl-2" data-toggle="modal" data-target="#deleteModal{{$onePurse['id']}}">&#10008;</button>
+                  @endif
+                @endif
+            @endforeach
 
         </div>
         <div class="d-flex">
